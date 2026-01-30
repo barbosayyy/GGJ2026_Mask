@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c8w2m6worj8qo"]
+
+[ext_resource type="Script" uid="uid://d1piyxrf5iuh1" path="res://scripts/RangedEnemy.cs" id="1_dfo0x"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yhmlg"]
+
+[node name="RangedEnemy" type="CharacterBody3D" unique_id=521823954 groups=["enemy"]]
+script = ExtResource("1_dfo0x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050583107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_t68yt")
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=2075345290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CapsuleMesh_yhmlg")

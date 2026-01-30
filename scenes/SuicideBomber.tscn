@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://8eltcpbs587w"]
+
+[ext_resource type="Script" uid="uid://3ndsn6pdtwkt" path="res://scripts/SuicideBomberEnemy.cs" id="1_bx7mf"]
+[ext_resource type="Script" uid="uid://cv8qk6jqqf1i7" path="res://scripts/EnemyData.cs" id="2_3ri2t"]
+
+[sub_resource type="Resource" id="Resource_3ri2t"]
+script = ExtResource("2_3ri2t")
+metadata/_custom_type_script = "uid://cv8qk6jqqf1i7"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yhmlg"]
+
+[node name="SuicideBomber" type="CharacterBody3D" unique_id=521823954 groups=["enemy"]]
+script = ExtResource("1_bx7mf")
+Data = SubResource("Resource_3ri2t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050583107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_t68yt")
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=2075345290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CapsuleMesh_yhmlg")

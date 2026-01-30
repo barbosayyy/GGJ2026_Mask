@@ -1,3 +1,54 @@
 [gd_scene format=3 uid="uid://p80x82x6rk8e"]
 
-[node name="Main" type="Node3D" unique_id=374956800]
+[ext_resource type="Script" uid="uid://b5cmtwvyaq15k" path="res://scripts/Main.cs" id="1_main"]
+[ext_resource type="Script" uid="uid://ciynmdgw46hkd" path="res://scripts/Player.cs" id="2_player"]
+[ext_resource type="Script" uid="uid://bkdkbv2kecjio" path="res://scripts/EnemySpawner.cs" id="3_spawner"]
+[ext_resource type="PackedScene" uid="uid://bqn5xwqv3rwm7" path="res://scenes/BasicEnemy.tscn" id="4_enemy"]
+[ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://8eltcpbs587w" path="res://scenes/SuicideBomber.tscn" id="6_272bh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_player"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1bvp3"]
+
+[node name="main" type="Node3D" unique_id=680527119]
+script = ExtResource("1_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1553826547]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1095328033]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 15, 15)
+current = true
+
+[node name="Ground" type="CSGBox3D" parent="." unique_id=1940629885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02217102, -0.5579772, 0.01883769)
+size = Vector3(50, 1, 50)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground" unique_id=1869552344]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D" unique_id=173724710]
+shape = SubResource("BoxShape3D_1bvp3")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1851285378 groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=226121385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_player")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1284311053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_1bvp3")
+
+[node name="EnemySpawner" type="Node3D" parent="." unique_id=334465423]
+script = ExtResource("3_spawner")
+EnemyScenes = [ExtResource("4_enemy"), ExtResource("5_7mycd"), ExtResource("6_272bh")]
+SpawnInterval = 3.0
+EnemiesPerWave = 3
