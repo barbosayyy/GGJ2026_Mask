@@ -12,9 +12,11 @@ public partial class Playfield : Node3D
 
 	PlayerController player;
 
-	[Export] Vector3 planeScale;
-	[Export] Vector3 planeInitOffset;
-	[Export] Vector3 spacing;
+	[Export] Vector3 planeScale = new Vector3(8,8,8);
+	[Export] Vector3 planeInitOffset = new Vector3(-16,0,-16f);
+	[Export] Vector3 spacing = new Vector3(16,0,16);
+
+	Vector3 moveToPos;
 
 	// Assign this script to the playable scene
 
@@ -60,13 +62,28 @@ public partial class Playfield : Node3D
 	{
 	}
 
+	bool isPressed = false;	
+
     private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)
     {
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
 		{
 			// Send moveto signal to player
-			GD.Print($"Clicked plane at position: {position}");
-			player.moveToPos = new Vector3(position.X, 0, position.Z);
+			// GD.Print($"Clicked plane at position: {position}");
+			player.moveToPos = position;
+			isPressed = true;
+		}
+		else if (@event is InputEventMouseButton mEvent && mEvent.ButtonIndex == MouseButton.Right && mEvent.IsPressed() == false)
+		{
+			// GD.Print($"Released at position: {position}");
+			player.moveToPos = position;
+			isPressed = false;
+		}
+		else if (@event is InputEventMouseMotion motionEvent && isPressed)
+		{
+			// When dragging, update position
+			// GD.Print($"Motion at: {position}");
+			player.moveToPos = position;
 		}
     }
 }
