@@ -1,0 +1,71 @@
+using Godot;
+using System;
+using System.Collections.Generic;
+
+public partial class Playfield : Node3D
+{
+
+	List<Node3D> planeMeshes;
+
+	int planeWidth = 100;
+	int planeHeight = 100;
+
+	PlayerController player;
+
+	[Export] Vector3 planeScale;
+	[Export] Vector3 planeInitOffset;
+	[Export] Vector3 spacing;
+
+	// Assign this script to the playable scene
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		player = (PlayerController)FindChild("Player",true,false);
+		Vector3 initPos = new Vector3(planeInitOffset.X, 0, planeInitOffset.Z);
+
+		MeshInstance3D test = new MeshInstance3D();
+
+		// player.AddChild(test)
+
+		for(int i = 0; i <= 2; i++)
+		{
+			for(int j = 0; j <= 2; j++)
+			{
+				MeshInstance3D planeMesh = new MeshInstance3D();
+				planeMesh.Mesh = new PlaneMesh();
+				planeMesh.Scale = new Vector3(planeScale.X,planeScale.Y,planeScale.Z);
+
+				StaticBody3D staticBody = new StaticBody3D();
+				staticBody.CollisionLayer = 1;
+				staticBody.InputRayPickable = true;
+				staticBody.InputEvent += OnInput;
+				staticBody.Position = new Vector3(initPos.X+spacing.X*j, initPos.Y, initPos.Z*spacing.Z*i);
+				CollisionShape3D collisionShape = new CollisionShape3D();
+				collisionShape.Shape = new BoxShape3D()
+				{
+					Size = new Vector3(2, 0.1f, 2)  // Match your plane size
+				};
+				staticBody.AddChild(collisionShape);
+				staticBody.AddChild(planeMesh, false);
+
+				AddChild(staticBody);
+			}
+		}
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+
+    private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)
+    {
+		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
+		{
+			// Send moveto signal to player
+			GD.Print($"Clicked plane at position: {position}");
+			player.moveToPos = new Vector3(position.X, 0, position.Z);
+		}
+    }
+}

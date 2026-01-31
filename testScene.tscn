@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://p80x82x6rk8e"]
+
+[ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="2_0xm2m"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0xm2m"]
+
+[node name="Root" type="Node3D" unique_id=928280500]
+script = ExtResource("1_0xm2m")
+planeScale = Vector3(4, 4, 4)
+planeInitOffset = Vector3(-8, 0, -8)
+spacing = Vector3(8, 0, 4)
+
+[node name="Player" parent="." unique_id=909576383 instance=ExtResource("2_0xm2m")]
+velocity = 1.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=67709294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3773065, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1995024798]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 8.245853, -0.17628765, -8.009064)
+visible = false
+mesh = SubResource("PlaneMesh_0xm2m")
