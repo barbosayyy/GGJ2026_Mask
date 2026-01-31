@@ -1,6 +1,17 @@
 [gd_scene format=3 uid="uid://c8w2m6worj8qo"]
 
-[ext_resource type="Script" uid="uid://d1piyxrf5iuh1" path="res://scripts/RangedEnemy.cs" id="1_dfo0x"]
+[ext_resource type="Script" uid="uid://vswrb0qfrgu8" path="res://scripts/RangedEnemy.cs" id="1_dfo0x"]
+[ext_resource type="PackedScene" uid="uid://o4l00r6mv3u0" path="res://scenes/projectiles/Fireball.tscn" id="2_k7el5"]
+[ext_resource type="Script" uid="uid://cf4ecaupxfjdf" path="res://scripts/EnemyData.cs" id="2_wltc5"]
+
+[sub_resource type="Resource" id="Resource_k7el5"]
+script = ExtResource("2_wltc5")
+MaxHealth = 30.0
+MoveSpeed = 0.5
+AttackRange = 30.0
+AttackCooldown = 6.0
+EnemyColor = Color(0.8984375, 1, 0, 1)
+metadata/_custom_type_script = "uid://cf4ecaupxfjdf"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
 
@@ -8,6 +19,9 @@
 
 [node name="RangedEnemy" type="CharacterBody3D" unique_id=521823954 groups=["enemy"]]
 script = ExtResource("1_dfo0x")
+ProjectileScene = ExtResource("2_k7el5")
+ProjectileSpeed = 5.0
+Data = SubResource("Resource_k7el5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050583107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
