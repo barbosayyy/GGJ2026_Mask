@@ -11,9 +11,11 @@ public partial class Playfield : Node3D
 
 	PlayerController player;
 
-	[Export] Vector3 planeScale;
-	[Export] Vector3 planeInitOffset;
-	[Export] Vector3 spacing;
+	[Export] Vector3 planeScale = new Vector3(8,8,8);
+	[Export] Vector3 planeInitOffset = new Vector3(-16,0,-16f);
+	[Export] Vector3 spacing = new Vector3(16,0,16);
+
+	Vector3 moveToPos;
 
 	[Export]
 	public PackedScene ClickPulseScene;
@@ -56,17 +58,33 @@ public partial class Playfield : Node3D
 	{
 	}
 
+	bool isPressed = false;	
+
 	private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)
 	{
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
 		{
-			GD.Print($"Clicked plane at position: {position}");
-			player.moveToPos = new Vector3(position.X, 0, position.Z);
-
+			// Send moveto signal to player
+			// GD.Print($"Clicked plane at position: {position}");
+			player.moveToPos = position;
+			isPressed = true;
+			
 			MeshInstance3D pulse = (MeshInstance3D)ClickPulseScene.Instantiate();
 			GD.Print($"here");
 			pulse.Position = new Vector3(position.X, 0, position.Z);
 			AddChild(pulse);
+		}
+		else if (@event is InputEventMouseButton mEvent && mEvent.ButtonIndex == MouseButton.Right && mEvent.IsPressed() == false)
+		{
+			// GD.Print($"Released at position: {position}");
+			player.moveToPos = position;
+			isPressed = false;
+		}
+		else if (@event is InputEventMouseMotion motionEvent && isPressed)
+		{
+			// When dragging, update position
+			// GD.Print($"Motion at: {position}");
+			player.moveToPos = position;
 		}
 	}
 }
