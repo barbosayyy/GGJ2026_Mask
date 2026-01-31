@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://4sbe72ryf5c7"]
+
+[ext_resource type="Texture2D" uid="uid://b1wpoc3jxsub7" path="res://assets/mask.png" id="1_hf7nh"]
+[ext_resource type="Texture2D" uid="uid://3rlxwds8yy0h" path="res://assets/mask_base.png" id="2_1krl1"]
+
+[node name="HealthbarMask" type="TextureProgressBar" unique_id=1349323257]
+texture_under = ExtResource("1_hf7nh")
+texture_progress = ExtResource("2_1krl1")
