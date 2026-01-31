@@ -58,14 +58,14 @@ public partial class Playfield : Node3D
 	{
 	}
 
-	bool isPressed = false;	
+	bool isPressed = false;
 
 	private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)
 	{
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
 		{
 			// Send moveto signal to player
-			// GD.Print($"Clicked plane at position: {position}");
+			//GD.Print($"Clicked plane at position: {position}");
 			player.moveToPos = position;
 			isPressed = true;
 			
