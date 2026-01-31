@@ -26,10 +26,6 @@ public partial class Enemy : CharacterBody3D
 		SetupVisual();
 		var bars = GetTree().GetNodesInGroup("player_healthbar");
 		healthbar = bars[0] as Healthbar;
-
-
-		GD.Print($"HEREHEREHERE {healthbar} aaaaa");
-		GD.Print($"aaaaaa");
 		OnReady();
 	}
 
