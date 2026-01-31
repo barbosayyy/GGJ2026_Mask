@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://pithvsax6nnl"]
+
+[ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_p1ktr"]
+[ext_resource type="Script" uid="uid://bthy3pdfoer82" path="res://scripts/EnemySpawner.cs" id="2_n2tsw"]
+[ext_resource type="PackedScene" uid="uid://bqn5xwqv3rwm7" path="res://scenes/BasicEnemy.tscn" id="3_crrlo"]
+[ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="4_tpjdf"]
+[ext_resource type="PackedScene" uid="uid://8eltcpbs587w" path="res://scenes/SuicideBomber.tscn" id="5_2q1im"]
+[ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="6_siqnr"]
+[ext_resource type="Shader" uid="uid://ds6isv3kvghbo" path="res://shaders/rain.gdshader" id="7_crrlo"]
+[ext_resource type="Script" uid="uid://d5w6uiy2scuv" path="res://canvas_shaders.gd" id="7_tpjdf"]
+[ext_resource type="Shader" uid="uid://bmprpur4d65ds" path="res://shaders/dark.gdshader" id="8_tpjdf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2q1im"]
+shader = ExtResource("7_crrlo")
+shader_parameter/count = 300
+shader_parameter/angle = -12.631996325019998
+shader_parameter/speed = 25.0
+shader_parameter/blur = 0.001
+shader_parameter/colour = Color(1, 1, 1, 1)
+shader_parameter/size = Vector2(0.005, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_siqnr"]
+shader = ExtResource("8_tpjdf")
+shader_parameter/fog_color = Color(0.13502455, 0.17403871, 0.21308598, 1)
+shader_parameter/moon_color = Vector4(0.55, 0.65, 0.75, 1)
+shader_parameter/tint_color = Vector4(0.05, 0.09, 0.06, 1)
+shader_parameter/fog_density = 2.318000110105
+shader_parameter/fog_speed = 0.4170000198075
+shader_parameter/vignette = 1.0
+shader_parameter/noise_scale = 3.9430001840326203
+shader_parameter/moon_strength = 0.5690000270275
+shader_parameter/darkness = 0.70400003344
+
+[node name="main" type="Node3D" unique_id=680527119]
+script = ExtResource("1_p1ktr")
+planeScale = Vector3(8, 8, 8)
+planeInitOffset = Vector3(-16, 0, -16)
+spacing = Vector3(16, 0, 16)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1553826547]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+shadow_enabled = true
+
+[node name="EnemySpawner" type="Node3D" parent="." unique_id=334465423]
+script = ExtResource("2_n2tsw")
+EnemyScenes = [ExtResource("3_crrlo"), ExtResource("4_tpjdf"), ExtResource("5_2q1im")]
+
+[node name="Player" parent="." unique_id=909576383 groups=["player"] instance=ExtResource("6_siqnr")]
+velocity = 4.0
+
+[node name="Camera" parent="Player" index="1" unique_id=1175584071]
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=643670982]
+script = ExtResource("7_tpjdf")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=2055445206]
+material = SubResource("ShaderMaterial_2q1im")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1152.0
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=1562662598]
+material = SubResource("ShaderMaterial_siqnr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[editable path="Player"]
