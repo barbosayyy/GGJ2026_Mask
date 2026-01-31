@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://pithvsax6nnl"]
 
 [ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_p1ktr"]
+[ext_resource type="PackedScene" uid="uid://cnn54rnvda725" path="res://scenes/ClickPulse.tscn" id="2_2q1im"]
 [ext_resource type="Script" uid="uid://bthy3pdfoer82" path="res://scripts/EnemySpawner.cs" id="2_n2tsw"]
 [ext_resource type="PackedScene" uid="uid://bqn5xwqv3rwm7" path="res://scenes/BasicEnemy.tscn" id="3_crrlo"]
 [ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="4_tpjdf"]
@@ -27,7 +28,7 @@ shader_parameter/tint_color = Vector4(0.05, 0.09, 0.06, 1)
 shader_parameter/fog_density = 2.318000110105
 shader_parameter/fog_speed = 0.4170000198075
 shader_parameter/vignette = 1.0
-shader_parameter/noise_scale = 3.9430001840326203
+shader_parameter/noise_scale = 3.94300018403262
 shader_parameter/moon_strength = 0.5690000270275
 shader_parameter/darkness = 0.70400003344
 
@@ -36,6 +37,7 @@ script = ExtResource("1_p1ktr")
 planeScale = Vector3(8, 8, 8)
 planeInitOffset = Vector3(-16, 0, -16)
 spacing = Vector3(16, 0, 16)
+ClickPulseScene = ExtResource("2_2q1im")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1553826547]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)

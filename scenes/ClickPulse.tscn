@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cnn54rnvda725"]
+
+[ext_resource type="Shader" uid="uid://gf8n4wns7ybk" path="res://shaders/ClickPulse.gdshader" id="1_saanp"]
+[ext_resource type="Script" uid="uid://yhcng6v0l3tq" path="res://scenes/click_pulse.gd" id="2_6e31n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6e31n"]
+render_priority = 0
+shader = ExtResource("1_saanp")
+shader_parameter/pulse_color = Vector3(1, 0.9, 0.2)
+shader_parameter/alpha = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5o3ru"]
+material = SubResource("ShaderMaterial_6e31n")
+height = 0.001
+rings = 5
+
+[node name="ClickPulse" type="MeshInstance3D" unique_id=627429801]
+mesh = SubResource("CylinderMesh_5o3ru")
+script = ExtResource("2_6e31n")
