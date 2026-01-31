@@ -7,6 +7,7 @@ public partial class Player : CharacterBody3D
 	[Export] public float Speed = 5f;
 	[Export] public float JumpVelocity = 4.5f;
 	[Export] public float MaxHealth = 100f;
+	[Export] public Healthbar healthbar;
 
 	private float currentHealth;
 	private float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();

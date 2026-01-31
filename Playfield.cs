@@ -70,7 +70,6 @@ public partial class Playfield : Node3D
 			isPressed = true;
 			
 			MeshInstance3D pulse = (MeshInstance3D)ClickPulseScene.Instantiate();
-			GD.Print($"here");
 			pulse.Position = new Vector3(position.X, 0, position.Z);
 			AddChild(pulse);
 		}

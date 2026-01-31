@@ -10,6 +10,8 @@
 [ext_resource type="Shader" uid="uid://ds6isv3kvghbo" path="res://shaders/rain.gdshader" id="7_crrlo"]
 [ext_resource type="Script" uid="uid://d5w6uiy2scuv" path="res://canvas_shaders.gd" id="7_tpjdf"]
 [ext_resource type="Shader" uid="uid://bmprpur4d65ds" path="res://shaders/dark.gdshader" id="8_tpjdf"]
+[ext_resource type="PackedScene" uid="uid://qvqpvtfjs1er" path="res://scenes/healthbar.tscn" id="11_siqnr"]
+[ext_resource type="Script" uid="uid://d3t14n8qjqoky" path="res://scenes/Healthbar.cs" id="12_p7m4m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2q1im"]
 shader = ExtResource("7_crrlo")
@@ -34,9 +36,6 @@ shader_parameter/darkness = 0.70400003344
 
 [node name="main" type="Node3D" unique_id=680527119]
 script = ExtResource("1_p1ktr")
-planeScale = Vector3(8, 8, 8)
-planeInitOffset = Vector3(-16, 0, -16)
-spacing = Vector3(16, 0, 16)
 ClickPulseScene = ExtResource("2_2q1im")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1553826547]
@@ -48,7 +47,6 @@ script = ExtResource("2_n2tsw")
 EnemyScenes = [ExtResource("3_crrlo"), ExtResource("4_tpjdf"), ExtResource("5_2q1im")]
 
 [node name="Player" parent="." unique_id=909576383 groups=["player"] instance=ExtResource("6_siqnr")]
-velocity = 4.0
 
 [node name="Camera" parent="Player" index="1" unique_id=1175584071]
 current = true
@@ -76,5 +74,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1686939937]
+
+[node name="Healthbar" parent="CanvasLayer2" unique_id=945611920 instance=ExtResource("11_siqnr")]
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 290.0
+offset_bottom = 80.0
+script = ExtResource("12_p7m4m")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer2" unique_id=766895786]
 
 [editable path="Player"]

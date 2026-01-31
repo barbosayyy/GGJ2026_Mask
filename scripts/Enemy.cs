@@ -3,11 +3,16 @@ using Godot;
 public partial class Enemy : CharacterBody3D
 {
 	[Export] public EnemyData Data;
+	[Export] public Healthbar healthbar;
 
 	protected float currentHealth;
 	protected Node3D target;
 	protected float attackTimer = 0f;
 	protected MeshInstance3D visual;
+	
+	[Signal]
+	public delegate void HealthChangedEventHandler(float current, float max);
+	
 
 	public override void _Ready()
 	{
@@ -19,6 +24,12 @@ public partial class Enemy : CharacterBody3D
 
 		currentHealth = Data.MaxHealth;
 		SetupVisual();
+		var bars = GetTree().GetNodesInGroup("player_healthbar");
+		healthbar = bars[0] as Healthbar;
+
+
+		GD.Print($"HEREHEREHERE {healthbar} aaaaa");
+		GD.Print($"aaaaaa");
 		OnReady();
 	}
 
@@ -105,6 +116,7 @@ public partial class Enemy : CharacterBody3D
 
 	protected virtual void Attack()
 	{
+		healthbar.DecreaseHealth((float)Data.Damage);
 		GD.Print($"{Data.EnemyName} attacks for {Data.Damage} damage!");
 	}
 
