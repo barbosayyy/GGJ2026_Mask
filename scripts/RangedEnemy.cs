@@ -55,11 +55,11 @@ public partial class RangedEnemy : Enemy
 			GetParent().AddChild(projectile);
 			projectile.GlobalPosition = GlobalPosition + Vector3.Up * 0.5f;
 
-			
+
 			var direction = (target.GlobalPosition - GlobalPosition).Normalized();
 			if (projectile.HasMethod("Initialize"))
 			{
-				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage);
+				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage, this);
 			}
 		}
 
@@ -101,7 +101,7 @@ public partial class RangedEnemy : Enemy
 			projectile.SetScript(script);
 			if (projectile.HasMethod("Initialize"))
 			{
-				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage);
+				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage, this);
 			}
 		}
 	}

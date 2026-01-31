@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://o4l00r6mv3u0"]
+
+[ext_resource type="Script" uid="uid://c1553btkyb0t1" path="res://scripts/Projectile.cs" id="1_y85qv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_guq2n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_guq2n"]
+
+[node name="Fireball" type="Area3D" unique_id=1665978487]
+script = ExtResource("1_y85qv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1920458125]
+mesh = SubResource("SphereMesh_guq2n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=835007688]
+shape = SubResource("SphereShape3D_guq2n")
