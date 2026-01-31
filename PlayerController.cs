@@ -5,7 +5,6 @@ public partial class PlayerController : Node3D
 {
 	Camera3D cam;
 
-	Vector3 camPos;
 	Vector3 currentPos;
 	public Vector3 moveToPos;
 	[Export]float velocity;
@@ -13,6 +12,7 @@ public partial class PlayerController : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		cam = (Camera3D)FindChild("Camera",true,false);
 		currentPos = Position;
 	}
 
@@ -21,5 +21,17 @@ public partial class PlayerController : Node3D
 	{
 		currentPos += new Vector3(Position.DirectionTo(moveToPos).X * velocity * (float)delta, 0, Position.DirectionTo(moveToPos).Z * velocity * (float)delta);
 		Position = currentPos;
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.WheelUp && mouseEvent.Pressed)
+		{
+			cam.Position -= new Vector3(0, 1, 1);
+		}
+		else if(@event is InputEventMouseButton mEvent && mEvent.ButtonIndex == MouseButton.WheelDown && mEvent.Pressed)
+		{
+			cam.Position += new Vector3(0, 1, 1);
+		}
 	}
 }

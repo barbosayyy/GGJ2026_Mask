@@ -40,12 +40,13 @@ public partial class Playfield : Node3D
 				staticBody.CollisionLayer = 1;
 				staticBody.InputRayPickable = true;
 				staticBody.InputEvent += OnInput;
-				staticBody.Position = new Vector3(initPos.X+spacing.X*j, initPos.Y, initPos.Z*spacing.Z*i);
+				staticBody.Position = new Vector3(initPos.X+spacing.X*j, initPos.Y, initPos.Z+spacing.Z*i);
 				CollisionShape3D collisionShape = new CollisionShape3D();
 				collisionShape.Shape = new BoxShape3D()
 				{
-					Size = new Vector3(2, 0.1f, 2)  // Match your plane size
+					Size = new Vector3(2, 0.01f, 2)  // Match your plane size
 				};
+				collisionShape.Scale = new Vector3(planeMesh.Scale.X, 1, planeMesh.Scale.Z);
 				staticBody.AddChild(collisionShape);
 				staticBody.AddChild(planeMesh, false);
 

@@ -7,17 +7,17 @@
 
 [node name="Root" type="Node3D" unique_id=928280500]
 script = ExtResource("1_0xm2m")
-planeScale = Vector3(4, 4, 4)
-planeInitOffset = Vector3(-8, 0, -8)
-spacing = Vector3(8, 0, 4)
+planeScale = Vector3(8, 8, 8)
+planeInitOffset = Vector3(-16, 0, -16)
+spacing = Vector3(16, 0, 16)
 
 [node name="Player" parent="." unique_id=909576383 instance=ExtResource("2_0xm2m")]
-velocity = 1.0
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=67709294]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3773065, 0)
+velocity = 3.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1995024798]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 8.245853, -0.17628765, -8.009064)
-visible = false
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 mesh = SubResource("PlaneMesh_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1432246562]
+transform = Transform3D(0.55658567, 0.6238749, -0.54862785, 0, 0.6603687, 0.7509416, 0.8307902, -0.41796333, 0.36755174, 0, 0, 0)
+shadow_enabled = true

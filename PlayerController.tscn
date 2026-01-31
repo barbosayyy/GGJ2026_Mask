@@ -12,4 +12,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_kpjcp")
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1175584071]
-transform = Transform3D(1, 0, 0, 0, 0.7263588, 0.68731576, 0, -0.68731576, 0.7263588, 0, 3.6761389, 2.932603)
+transform = Transform3D(1, 0, 0, 0, 0.6172693, 0.7867519, 0, -0.7867519, 0.6172693, 0, 5.537226, 3.5524309)
