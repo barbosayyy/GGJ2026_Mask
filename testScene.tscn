@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://p80x82x6rk8e"]
+[gd_scene format=3 uid="uid://bwrfmy7rescvf"]
 
 [ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="2_0xm2m"]
