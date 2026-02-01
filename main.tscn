@@ -6,14 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://8eltcpbs587w" path="res://scenes/SuicideBomber.tscn" id="6_272bh"]
-[ext_resource type="Shader" uid="uid://bmprpur4d65ds" path="res://shaders/dark.gdshader" id="9_4c57u"]
-[ext_resource type="Shader" uid="uid://ds6isv3kvghbo" path="res://shaders/rain.gdshader" id="9_kek77"]
 
 [node name="main" type="Node3D" unique_id=680527119]
 script = ExtResource("1_7mycd")
-planeScale = Vector3(8, 8, 8)
-planeInitOffset = Vector3(-16, 0, -16)
-spacing = Vector3(16, 0, 16)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1553826547]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
