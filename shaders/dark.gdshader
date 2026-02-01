@@ -2,12 +2,12 @@ shader_type canvas_item;
 render_mode blend_mix;
 
 uniform vec4 fog_color : source_color = vec4(0.04, 0.06, 0.08, 1.0);
-uniform vec4 moon_color = vec4(0.55, 0.65, 0.75, 1.0);
-uniform vec4 tint_color = vec4(0.05, 0.09, 0.06, 1.0);
+uniform vec4 moon_color = vec4(0.55, 0.65, 1.0, 1.0);
+uniform vec4 tint_color = vec4(0.05, 0.06, 1.0, 1.0);
 
 uniform float fog_density : hint_range(0.0, 3.0) = 1.2;
 uniform float fog_speed : hint_range(0.0, 2.0) = 0.25;
-uniform float vignette : hint_range(0.0, 1.0) = 0.85;
+uniform float vignette : hint_range(0.0, 1.0) = 0.70;
 uniform float noise_scale : hint_range(0.1, 5.0) = 1.6;
 uniform float moon_strength : hint_range(0.0, 2.0) = 0.35;
 uniform float darkness : hint_range(0.0, 1.0) = 0.55; // LOWERED
@@ -52,8 +52,8 @@ void fragment() {
     col *= (1.0 - vign);
 
     col = mix(col, fog_color.rgb, fog * 0.45);
-    col *= (1.0 - darkness);
+    col *= (1.0-darkness);
 
     // output alpha for blending
-    COLOR = vec4(col, 0.7);
+    COLOR = vec4(col, 0.4);
 }

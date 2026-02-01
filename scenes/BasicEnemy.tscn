@@ -9,6 +9,7 @@ script = ExtResource("2_3wrki")
 EnemyName = "Basic"
 MoveSpeed = 1.5
 AttackRange = 2.0
+AttackCooldown = 0.7
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
 

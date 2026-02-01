@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform int count: hint_range(0, 4000) = 1600;
+uniform int count: hint_range(0, 100) = 10;
 uniform float angle: hint_range(-90.0, 90.0) = -45.0;
 uniform float speed: hint_range(25.0, 500.0) = 300.0;
 uniform float blur: hint_range(0.0005, 0.1) = 0.001;
@@ -28,7 +28,7 @@ vec2 rot(vec2 v, float a) {
 
 void fragment() {
     vec2 s = size * 0.1;
-    float time = TIME + 1000.0;
+    float time = TIME + 500.0;
     float rad = radians(angle);
 
     // rotate UV

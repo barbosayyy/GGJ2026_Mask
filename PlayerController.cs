@@ -24,6 +24,8 @@ public partial class PlayerController : Node3D
 	[Export] public Node3D aimingArrow;
 	private bool isAimingArrowVisible = false;
 
+	Label scoreLabel;
+	public int score;
 	// Ability scenes
 	[Export] public PackedScene SwordSlashScene;
 	[Export] public PackedScene KunaiScene;
@@ -44,6 +46,7 @@ public partial class PlayerController : Node3D
 		equippedAbilities.Add(abilities.ElementAt(1));
 		equippedAbilities.Add(abilities.ElementAt(2));
 
+		scoreLabel = (Label)GetParent().FindChild("GameUI").FindChild("Score", true, false);
 		SetPlayerHealth(maxHealth);
 	}
 
@@ -257,11 +260,17 @@ public partial class PlayerController : Node3D
 	{
 		return isAimingArrowVisible;
 	}
-	
+
 	public void Possess(Vector3 pPosition)
 	{
 		Position = pPosition;
 		currentPos = Position;
 		moveToPos = Position;
+	}
+
+	public void AddScore(int amount)
+	{
+		score += amount;
+		scoreLabel.Text = score.ToString();
 	}
 }

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GGJ2026_Mask"
-run/main_scene="uid://bwrfmy7rescvf"
+run/main_scene="uid://p80x82x6rk8e"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -63,6 +63,14 @@ renderer/rendering_method.mobile="gl_compatibility"
 
 [shader_globals]
 
+resolution={
+"type": "vec2",
+"value": Vector2(320, 240)
+}
+color_depth={
+"type": "float",
+"value": 32.0
+}
 psx_affine_strength={
 "type": "float",
 "value": 1.0
@@ -86,12 +94,4 @@ psx_fog_near={
 psx_snap_distance={
 "type": "float",
 "value": 0.025
-}
-resolution={
-"type": "vec2",
-"value": Vector2(320, 240)
-}
-color_depth={
-"type": "float",
-"value": 32.0
 }
