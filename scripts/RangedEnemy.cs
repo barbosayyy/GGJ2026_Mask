@@ -44,7 +44,6 @@ public partial class RangedEnemy : Enemy
 
 	private void ShootProjectile()
 	{
-		
 		if (ProjectileScene == null)
 		{
 			CreateDefaultProjectile();
@@ -52,11 +51,13 @@ public partial class RangedEnemy : Enemy
 		else
 		{
 			var projectile = ProjectileScene.Instantiate<Node3D>();
-			GetParent().AddChild(projectile);
-			projectile.GlobalPosition = GlobalPosition + Vector3.Up * 0.5f;
 
-
+			var spawnPos = GlobalPosition + Vector3.Up * 1.5f;
 			var direction = (target.GlobalPosition - GlobalPosition).Normalized();
+
+			GetParent().AddChild(projectile);
+			projectile.GlobalPosition = spawnPos;
+
 			if (projectile.HasMethod("Initialize"))
 			{
 				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage, this);
@@ -71,7 +72,7 @@ public partial class RangedEnemy : Enemy
 		
 		var projectile = new Area3D();
 		GetParent().AddChild(projectile);
-		projectile.GlobalPosition = GlobalPosition + Vector3.Up * 0.5f;
+		projectile.GlobalPosition = GlobalPosition + Vector3.Up * 1.5f;
 
 		
 		var mesh = new MeshInstance3D();

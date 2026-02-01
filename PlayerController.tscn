@@ -7,6 +7,8 @@
 [ext_resource type="Resource" path="res://Resources/Crossbow.tres" id="4_ehpa4"]
 [ext_resource type="Resource" path="res://Resources/Fireball.tres" id="5_fq6e3"]
 [ext_resource type="Shader" uid="uid://bkmxw7nd2wkti" path="res://shaders/ps1.gdshader" id="6_3pjhv"]
+[ext_resource type="PackedScene" uid="uid://o8m0xxbs6bw2" path="res://scenes/projectiles/SwordSlash.tscn" id="6_ehpa4"]
+[ext_resource type="PackedScene" uid="uid://d0c02nuj8fdpp" path="res://scenes/projectiles/Kunai.tscn" id="7_fq6e3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kpjcp"]
 
@@ -20,10 +22,14 @@ material = SubResource("ShaderMaterial_vl31c")
 flip_faces = true
 size = Vector2(2, 2)
 
-[node name="Player" type="Node3D" unique_id=909576383 node_paths=PackedStringArray("aimingArrow")]
+[node name="Player" type="Node3D" unique_id=909576383 node_paths=PackedStringArray("aimingArrow") groups=["player"]]
 script = ExtResource("1_xhfnw")
 abilities = Array[ExtResource("2_876be")]([ExtResource("3_xmas2"), ExtResource("4_ehpa4"), ExtResource("5_fq6e3")])
 aimingArrow = NodePath("AimingArrow")
+SwordSlashScene = ExtResource("6_ehpa4")
+KunaiScene = ExtResource("7_fq6e3")
+KunaiCount = 27
+AbilityCooldown = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1573086431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

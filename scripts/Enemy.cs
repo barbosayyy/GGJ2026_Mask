@@ -42,20 +42,20 @@ public partial class Enemy : CharacterBody3D
 
 	protected virtual void SetupVisual()
 	{
-		visual = GetNodeOrNull<MeshInstance3D>("Visual");
-		if (visual == null)
-		{
-			visual = new MeshInstance3D();
-			visual.Name = "Visual";
-			AddChild(visual);
+		// visual = GetNodeOrNull<MeshInstance3D>("Visual");
+		// if (visual == null)
+		// {
+		// 	visual = new MeshInstance3D();
+		// 	visual.Name = "Visual";
+		// 	AddChild(visual);
 
-			var mesh = new BoxMesh();
-			mesh.Size = Data.Scale;
-			visual.Mesh = mesh;
-		}
-		var material = new StandardMaterial3D();
-		material.AlbedoColor = Data.EnemyColor;
-		visual.SetSurfaceOverrideMaterial(0, material);
+		// 	var mesh = new BoxMesh();
+		// 	mesh.Size = Data.Scale;
+		// 	visual.Mesh = mesh;
+		// }
+		// var material = new StandardMaterial3D();
+		// material.AlbedoColor = Data.EnemyColor;
+		// visual.SetSurfaceOverrideMaterial(0, material);
 	}
 
 	private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)

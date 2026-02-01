@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://o8m0xxbs6bw2"]
+
+[ext_resource type="Script" uid="uid://q8oqebykt3jr" path="res://scripts/SwordSlash.cs" id="1_slash"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_slash"]
+height = 1.0
+radius = 3.0
+
+[node name="SwordSlash" type="Area3D" unique_id=1047623756]
+collision_layer = 4
+collision_mask = 1
+monitorable = false
+script = ExtResource("1_slash")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=960163272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_slash")

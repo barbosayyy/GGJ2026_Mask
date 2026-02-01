@@ -16,6 +16,12 @@ public partial class Projectile : Area3D
 
 	public override void _Ready()
 	{
+		// Defer signal connection to next frame so Initialize() can set spawner first
+		CallDeferred(MethodName.ConnectSignals);
+	}
+
+	private void ConnectSignals()
+	{
 		BodyEntered += OnBodyEntered;
 		AreaEntered += OnAreaEntered;
 	}
@@ -26,6 +32,12 @@ public partial class Projectile : Area3D
 		speed = spd;
 		damage = dmg;
 		spawner = spawnerNode;
+
+		// Face the direction of travel (toward player)
+		if (direction != Vector3.Zero)
+		{
+			LookAt(GlobalPosition + direction, Vector3.Up);
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -43,6 +55,9 @@ public partial class Projectile : Area3D
 	{
 		if (body == spawner) return;
 
+		// Ignore ground/terrain (StaticBody3D) - only react to characters
+		if (body is StaticBody3D) return;
+
 		if (body.IsInGroup("player"))
 		{
 			if (body.HasMethod("TakeDamage"))
@@ -51,14 +66,11 @@ public partial class Projectile : Area3D
 			}
 			QueueFree();
 		}
-		else if (body is StaticBody3D or CharacterBody3D)
-		{
-			QueueFree();
-		}
 	}
 
 	private void OnAreaEntered(Area3D area)
 	{
+		// Only react to other projectiles for explosion mechanic
 		if (area is Projectile otherProjectile && !hasExploded && !otherProjectile.hasExploded)
 		{
 			hasExploded = true;
@@ -70,10 +82,8 @@ public partial class Projectile : Area3D
 
 			otherProjectile.QueueFree();
 			QueueFree();
-			return;
 		}
-
-		QueueFree();
+		// Don't destroy on other area contacts
 	}
 
 	private void FireBallExplosion(Vector3 position)

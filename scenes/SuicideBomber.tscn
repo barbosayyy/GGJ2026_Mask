@@ -13,6 +13,7 @@ EnemyColor = Color(0.03125, 1, 0, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yhmlg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
+height = 3.609375
 
 [node name="SuicideBomber" type="CharacterBody3D" unique_id=521823954 groups=["enemy"]]
 script = ExtResource("1_bx7mf")
@@ -29,5 +30,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5644687, 0)
 [node name="Area3D" type="Area3D" parent="." unique_id=771409499]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1050583107]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2748153, 0)
+shape = SubResource("CapsuleShape3D_t68yt")
+
+[node name="BodyCollision" type="CollisionShape3D" parent="." unique_id=231845553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3046875, 0)
 shape = SubResource("CapsuleShape3D_t68yt")

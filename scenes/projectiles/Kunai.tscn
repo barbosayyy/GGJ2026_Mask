@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d0c02nuj8fdpp"]
+
+[ext_resource type="Script" uid="uid://e0suxxs8cvvl" path="res://scripts/Kunai.cs" id="1_kunai"]
+[ext_resource type="PackedScene" uid="uid://jvmbfolxyosn" path="res://assets/nifadanascostas.glb" id="2_nbvgg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kunai"]
+size = Vector3(0.2, 0.2, 0.89001465)
+
+[node name="Kunai" type="Area3D" unique_id=458973822]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+collision_layer = 4
+monitorable = false
+script = ExtResource("1_kunai")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1621800981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.020324707)
+shape = SubResource("BoxShape3D_kunai")
+
+[node name="nifadanascostas" parent="." unique_id=948078640 instance=ExtResource("2_nbvgg")]
+transform = Transform3D(-2.1855695e-09, 0, -0.05, 0, 0.05, 0, 0.05, 0, -2.1855695e-09, 0, 0, 0)

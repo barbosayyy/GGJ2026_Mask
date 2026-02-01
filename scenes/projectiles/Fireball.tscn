@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c1553btkyb0t1" path="res://scripts/Projectile.cs" id="1_y85qv"]
 [ext_resource type="Shader" uid="uid://ho1qwjv0n1n1" path="res://shaders/VFX_fireball.tres" id="2_msk11"]
+[ext_resource type="ArrayMesh" uid="uid://bddl4q1p1xgty" path="res://assets/FireballMesh.obj" id="3_msk11"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_guq2n"]
+radius = 0.3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_oivon"]
 frequency = 0.0171
@@ -16,30 +18,45 @@ seamless = true
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sdtis"]
 render_priority = 0
 shader = ExtResource("2_msk11")
-shader_parameter/Vector2Parameter = Vector2(0, 2)
+shader_parameter/Vector2Parameter = Vector2(0, -2)
 shader_parameter/Texture2DParameter = SubResource("NoiseTexture2D_msk11")
-shader_parameter/FloatParameter = -0.3
+shader_parameter/FloatParameter = -0.095
 
-[sub_resource type="SphereMesh" id="SphereMesh_m12fh"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_msk11"]
+frequency = 0.0025
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oivon"]
-albedo_color = Color(0.47265625, 0.3544922, 0, 1)
-normal_enabled = true
-rim_enabled = true
-rim_tint = 0.11
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sdtis"]
+noise = SubResource("FastNoiseLite_msk11")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m12fh"]
+render_priority = 0
+shader = ExtResource("2_msk11")
+shader_parameter/Vector2Parameter = Vector2(1, 0)
+shader_parameter/Texture2DParameter = SubResource("NoiseTexture2D_sdtis")
+shader_parameter/FloatParameter = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_msk11"]
-material = SubResource("StandardMaterial3D_oivon")
+material = SubResource("ShaderMaterial_m12fh")
 
 [node name="Fireball" type="Area3D" unique_id=1665978487]
+collision_layer = 4
 script = ExtResource("1_y85qv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=835007688]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 shape = SubResource("SphereShape3D_guq2n")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=490337605]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -0.33576083)
 material_override = SubResource("ShaderMaterial_sdtis")
-mesh = SubResource("SphereMesh_m12fh")
+mesh = ExtResource("3_msk11")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=227945827]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -0.80165505)
 mesh = SubResource("SphereMesh_msk11")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=381898673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.9074786)
+light_color = Color(1, 0.46875, 0, 1)
+light_energy = 3.0

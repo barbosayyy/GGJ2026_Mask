@@ -9,6 +9,9 @@ public partial class PlayerController : Node3D
 
 	Vector3 currentPos;
 	public Vector3 moveToPos;
+
+	[Export] private float maxHealth = 100;
+	private float currentHealth;
 	[Export] float velocity = 3.0f;
 	[Export] public Godot.Collections.Array<Ability> abilities {get;set;} = new();
 
@@ -21,6 +24,15 @@ public partial class PlayerController : Node3D
 	[Export] public Node3D aimingArrow;
 	private bool isAimingArrowVisible = false;
 
+	// Ability scenes
+	[Export] public PackedScene SwordSlashScene;
+	[Export] public PackedScene KunaiScene;
+
+	// Ability settings
+	[Export] public int KunaiCount = 8;
+	[Export] public float AbilityCooldown = 0.5f;
+	private float abilityCooldownTimer = 0f;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -31,6 +43,8 @@ public partial class PlayerController : Node3D
 		equippedAbilities.Add(abilities.ElementAt(0));
 		equippedAbilities.Add(abilities.ElementAt(1));
 		equippedAbilities.Add(abilities.ElementAt(2));
+
+		SetPlayerHealth(maxHealth);
 	}
 
     public override void _EnterTree()
@@ -46,7 +60,13 @@ public partial class PlayerController : Node3D
 		{
 			currentPos += new Vector3(Position.DirectionTo(moveToPos).X * velocity * (float)delta, 0, Position.DirectionTo(moveToPos).Z * velocity * (float)delta);
 			Position = currentPos;
-		}		
+		}
+
+		// Update ability cooldown
+		if (abilityCooldownTimer > 0)
+		{
+			abilityCooldownTimer -= (float)delta;
+		}
 	}
 
 	public override void _Input(InputEvent @event)
@@ -79,23 +99,87 @@ public partial class PlayerController : Node3D
 	// Ability behaviors
 	private void UseAbility(int abilityID)
 	{
+		if (abilityCooldownTimer > 0) return;
+
 		switch(abilityID)
 		{
-			case(0):
-				GD.Print("Used abiity 1");
-				ShowAimingArrow();
-				GD.Print(equippedAbilities.ElementAt(abilityID).name);
-			break;
-			case(1):
-				GD.Print("Used abiity 2");
-				ShowAimingArrow();
-				GD.Print(equippedAbilities.ElementAt(abilityID).name);
-			break;
+			case(0): // Q - Sword Slash
+				GD.Print("Used Sword Slash!");
+				SpawnSwordSlash();
+				abilityCooldownTimer = AbilityCooldown;
+				break;
+			case(1): // W - Circular Kunai Throw
+				GD.Print("Used Circular Kunai!");
+				SpawnCircularKunai();
+				abilityCooldownTimer = AbilityCooldown;
+				break;
 			case(2):
-				GD.Print("Used abiity 3");
+				GD.Print("Used ability 3");
 				ShowAimingArrow();
 				GD.Print(equippedAbilities.ElementAt(abilityID).name);
-			break;
+				break;
+		}
+	}
+
+	private Vector3 GetMouseWorldPosition()
+	{
+		var mousePos = GetViewport().GetMousePosition();
+		var from = cam.ProjectRayOrigin(mousePos);
+		var to = from + cam.ProjectRayNormal(mousePos) * 1000f;
+
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create(from, to);
+		query.CollideWithAreas = false;
+		query.CollideWithBodies = true;
+
+		var result = spaceState.IntersectRay(query);
+		if (result.Count > 0)
+		{
+			return (Vector3)result["position"];
+		}
+
+		// Fallback: intersect with ground plane (Y=0)
+		float t = -from.Y / (to - from).Normalized().Y;
+		return from + (to - from).Normalized() * t;
+	}
+
+	private void SpawnSwordSlash()
+	{
+		if (SwordSlashScene == null)
+		{
+			GD.PrintErr("SwordSlashScene not assigned!");
+			return;
+		}
+
+		var mousePos = GetMouseWorldPosition();
+		var direction = (mousePos - GlobalPosition).Normalized();
+		direction.Y = 0;
+
+		var slash = SwordSlashScene.Instantiate<SwordSlash>();
+		GetTree().Root.AddChild(slash);
+		slash.GlobalPosition = GlobalPosition + new Vector3(0, 0.5f, 0);
+		slash.Initialize(direction, this);
+	}
+
+	private void SpawnCircularKunai()
+	{
+		if (KunaiScene == null)
+		{
+			GD.PrintErr("KunaiScene not assigned!");
+			return;
+		}
+
+		float angleStep = 360f / KunaiCount;
+
+		for (int i = 0; i < KunaiCount; i++)
+		{
+			float angle = Mathf.DegToRad(i * angleStep);
+			var direction = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
+
+			var kunai = KunaiScene.Instantiate<Kunai>();
+			GetTree().Root.AddChild(kunai);
+			kunai.GlobalPosition = GlobalPosition + new Vector3(0, 1f, 0);
+			kunai.Initialize(direction, this);
 		}
 	}
 
@@ -134,6 +218,39 @@ public partial class PlayerController : Node3D
 		Vector3 direction = (targetPosition - Position).Normalized();
 		direction.Y = 1; // Keep it flat on the ground plane
 		SetAimingArrowDirection(direction);
+	}
+
+	private void SetPlayerHealth(float newHealth)
+	{
+		currentHealth = newHealth;
+		GD.Print("New health is now ${health}");
+	}
+
+	public virtual void TakeDamage(float damage)
+	{
+		currentHealth -= damage;
+		OnDamageTaken(damage);
+
+		if (currentHealth <= 0)
+		{
+			Die();
+		}
+	}
+
+	protected virtual void Die()
+	{
+		OnDeath();
+		QueueFree();
+	}
+
+	protected virtual void OnDeath()
+	{
+		GD.Print("player died!");
+	}
+
+	protected virtual void OnDamageTaken(float damage)
+	{
+		// damage or sound animation
 	}
 
 	public bool IsAimingArrowVisible()

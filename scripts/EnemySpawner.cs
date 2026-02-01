@@ -7,11 +7,11 @@ public partial class EnemySpawner : Node3D
 	[Export] public PackedScene[] EnemyScenes = System.Array.Empty<PackedScene>();
 	[Export] public float SpawnInterval = 2f;
 	[Export] public int EnemiesPerWave = 5;
-	[Export] public float SpawnDistance = 15f; // Distance from player to spawn
 	[Export] public float SpawnHeight = 0.5f; // Y position for spawned enemies
 
 	[ExportGroup("Spawn Area")]
 	[Export] public bool UseCircularSpawn = true; // Spawn in circle around player
+	[Export] public float SpawnDistance = 15f; // Distance from player to spawn
 	[Export] public Vector2 SpawnAreaSize = new Vector2(20, 20); // for rectangular spawn
 
 	[ExportGroup("Wave Progression")]
