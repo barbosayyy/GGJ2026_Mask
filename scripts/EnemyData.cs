@@ -10,7 +10,7 @@ public partial class EnemyData : Resource
 	[Export] public float AttackRange = 1.5f;
 	[Export] public float AttackCooldown = 1f;
 	[Export] public int ExperienceValue = 5;
-
+	[Export] public int RewardAmount = 1;
 	[Export] public Color EnemyColor = Colors.Red;
 	[Export] public Vector3 Scale = Vector3.One;
 

@@ -8,7 +8,7 @@ public partial class Enemy : CharacterBody3D
 
 	protected float currentHealth;
 	protected Node3D target;
-	protected float attackTimer = 0f;
+	protected float attackTimer = 0.5f;
 	protected MeshInstance3D visual;
 	protected AnimationPlayer player;
 	
@@ -117,6 +117,7 @@ public partial class Enemy : CharacterBody3D
 		{
 			if(Velocity == Vector3.Zero)
 			{
+				attackTimer = Data.AttackCooldown;
 				player.Play("WALK", -1, new RandomNumberGenerator().RandfRange(5,7));
 			}
 			Velocity = direction * Data.MoveSpeed;
@@ -124,6 +125,7 @@ public partial class Enemy : CharacterBody3D
 		else
 		{
 			Velocity = Vector3.Zero;
+			attackTimer -= delta;
 			if(player.CurrentAnimation == "WALK")
 			{
 				player.Stop();
@@ -134,8 +136,6 @@ public partial class Enemy : CharacterBody3D
 	protected virtual void HandleAttack(float delta)
 	{
 		if (target == null) return;
-
-		attackTimer -= delta;
 
 		float distance = GlobalPosition.DistanceTo(target.GlobalPosition);
 		if (distance <= Data.AttackRange && attackTimer <= 0)
@@ -208,5 +208,7 @@ public partial class Enemy : CharacterBody3D
 	protected virtual void OnDeath()
 	{
 		GD.Print($"{Data.EnemyName} died!");
+		PlayerController player = (PlayerController)GetTree().GetNodesInGroup("player")[0];
+		player.AddScore(Data.RewardAmount);
 	}
 }

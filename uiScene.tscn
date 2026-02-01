@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://k0v163lowd41"]
+[gd_scene format=3 uid="uid://c8yk4m71xm1v0"]
 
 [ext_resource type="Script" uid="uid://d5w6uiy2scuv" path="res://canvas_shaders.gd" id="1_dl2yh"]
 [ext_resource type="Shader" uid="uid://ds6isv3kvghbo" path="res://shaders/rain.gdshader" id="2_rsi87"]
@@ -10,8 +10,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eq4ai"]
 shader = ExtResource("2_rsi87")
-shader_parameter/count = 300
-shader_parameter/angle = -12.631996325019998
+shader_parameter/count = 30
+shader_parameter/angle = -13.121996348295
 shader_parameter/speed = 25.0
 shader_parameter/blur = 0.001
 shader_parameter/colour = Color(1, 1, 1, 1)
@@ -21,34 +21,41 @@ shader_parameter/size = Vector2(0.005, 0.3)
 shader = ExtResource("3_iy3px")
 shader_parameter/fog_color = Color(0.13502455, 0.17403871, 0.21308598, 1)
 shader_parameter/moon_color = Vector4(0.55, 0.65, 0.75, 1)
-shader_parameter/tint_color = Vector4(0.05, 0.09, 0.06, 1)
+shader_parameter/tint_color = Vector4(0.05, 0.16, 0.28, 1)
 shader_parameter/fog_density = 2.318000110105
 shader_parameter/fog_speed = 0.4170000198075
-shader_parameter/vignette = 1.0
+shader_parameter/vignette = 0.730000034675
 shader_parameter/noise_scale = 3.94300018403262
 shader_parameter/moon_strength = 0.5690000270275
-shader_parameter/darkness = 0.70400003344
+shader_parameter/darkness = 0.670000031825
+
+[sub_resource type="LabelSettings" id="LabelSettings_dl2yh"]
+line_spacing = 0.0
+font_size = 92
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.18431373)
+shadow_offset = Vector2(2.46, 1.79)
 
 [node name="UiScene" type="Node" unique_id=343424156]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1749181531]
 script = ExtResource("1_dl2yh")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1929757898]
+[node name="Rain" type="ColorRect" parent="CanvasLayer" unique_id=1929757898]
 material = SubResource("ShaderMaterial_eq4ai")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1152.0
-offset_top = 648.0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_left = 1919.0
+offset_top = 1082.0
+offset_right = 1919.0
+offset_bottom = 1082.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.1415927
 mouse_filter = 2
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=380271654]
+[node name="Dark" type="ColorRect" parent="CanvasLayer" unique_id=380271654]
 material = SubResource("ShaderMaterial_mspyk")
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,7 +78,6 @@ offset_right = 120.0
 offset_bottom = 117.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 script = ExtResource("5_n67eb")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer2/Healthbar" unique_id=656166997]
@@ -95,3 +101,28 @@ texture_under = ExtResource("6_dcukj")
 texture_progress = ExtResource("7_udg0e")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer2" unique_id=559176632]
+
+[node name="FixedLabel" type="Label" parent="CanvasLayer2" unique_id=302392678]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1899.0
+offset_top = 1.0
+offset_right = -1630.0
+offset_bottom = 429.0
+grow_horizontal = 0
+text = "Slain:"
+label_settings = SubResource("LabelSettings_dl2yh")
+
+[node name="Score" type="Label" parent="CanvasLayer2" unique_id=2066924160]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1653.0
+offset_top = 1.0
+offset_right = -1384.0
+offset_bottom = 429.0
+grow_horizontal = 0
+text = "0
+"
+label_settings = SubResource("LabelSettings_dl2yh")

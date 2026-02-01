@@ -10,6 +10,7 @@ EnemyName = "Basic"
 MaxHealth = 50.0
 MoveSpeed = 1.5
 AttackRange = 2.0
+AttackCooldown = 0.7
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
 
