@@ -1,7 +1,9 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 
 public partial class PlayerController : Node3D
 {
@@ -35,8 +37,14 @@ public partial class PlayerController : Node3D
 	[Export] public int KunaiCount = 8;
 	[Export] public float AbilityCooldown = 0.5f;
 	private float abilityCooldownTimer = 0f;
+	protected AnimationPlayer animPlayer;
 
 	// Called when the node enters the scene tree for the first time.
+
+	Node3D skelly;
+	Node3D goblin;
+
+	int possessedID;
 	public override void _Ready()
 	{
 		cam = (Camera3D)FindChild("Camera",true,false);
@@ -57,6 +65,12 @@ public partial class PlayerController : Node3D
 		}
 		
 		SetPlayerHealth(maxHealth);
+
+
+		skelly = (Node3D)FindChild("SkeletonMode", true);
+		animPlayer = (AnimationPlayer)skelly.FindChild("AnimationPlayer");
+		goblin = (Node3D)FindChild("GoblinMode", true);
+		goblin.Hide();
 	}
 
     public override void _EnterTree()
@@ -70,8 +84,21 @@ public partial class PlayerController : Node3D
 	{
 		if(currentPos.DistanceSquaredTo(moveToPos) > 0.5)
 		{
+			if(animPlayer.IsPlaying() == false)
+			{
+				animPlayer.Play("WALK",-1, 3, false);
+			}
 			currentPos += new Vector3(Position.DirectionTo(moveToPos).X * velocity * (float)delta, 0, Position.DirectionTo(moveToPos).Z * velocity * (float)delta);
 			Position = currentPos;
+			skelly.LookAt(new Vector3(moveToPos.X, 1.589f, moveToPos.Z));
+			goblin.LookAt(new Vector3(moveToPos.X, 1.589f, moveToPos.Z));
+		}
+		else
+		{
+			if(animPlayer.IsPlaying() == true)
+			{
+				animPlayer.Stop();
+			}
 		}
 
 		// Update ability cooldown
@@ -118,6 +145,7 @@ public partial class PlayerController : Node3D
 			case(0): // Q - Sword Slash
 				GD.Print("Used Sword Slash!");
 				SpawnSwordSlash();
+				animPlayer.Play("SWORD", -1, 1, false);
 				abilityCooldownTimer = AbilityCooldown;
 				break;
 			case(1): // W - Circular Kunai Throw
@@ -277,11 +305,28 @@ public partial class PlayerController : Node3D
 		return isAimingArrowVisible;
 	}
 
-	public void Possess(Vector3 pPosition)
+	public void Possess(Vector3 pPosition, int enemyID)
 	{
 		Position = pPosition;
 		currentPos = Position;
 		moveToPos = Position;
+		animPlayer.Stop();
+
+		if(enemyID == 0 || enemyID == 1)
+		{
+			skelly.Show();
+			goblin.Hide();
+			animPlayer = (AnimationPlayer)skelly.FindChild("AnimationPlayer");
+			Position = new Vector3(pPosition.X, 0f, pPosition.Z);
+		}
+		else if(enemyID == 2)
+		{
+			goblin.Show();
+			skelly.Hide();
+			animPlayer = (AnimationPlayer)goblin.FindChild("AnimationPlayer");
+			Position = new Vector3(pPosition.X, 0f, pPosition.Z);
+		}
+		LookAt(new Vector3(1, 1.4f, 0));
 	}
 
 	public void AddScore(int amount)

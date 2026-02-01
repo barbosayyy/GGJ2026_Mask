@@ -1,5 +1,7 @@
 [gd_scene format=4 uid="uid://bebyj187kxhom"]
 
+[ext_resource type="Material" uid="uid://di1h0e5dygaa0" path="res://assets/goblin.tres" id="1_pvx8w"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecj1q"]
 resource_name = "None"
 cull_mode = 2
@@ -6473,6 +6475,7 @@ bones/221/rotation = Quaternion(0.0028188818, 0, -0.70791274, 0.7062943)
 bones/221/scale = Vector3(1, 1, 0.99999994)
 
 [node name="BASE_Low_Poly_Man_Cube_001" type="MeshInstance3D" parent="rig_001/Skeleton3D" unique_id=705137081]
+material_override = ExtResource("1_pvx8w")
 mesh = SubResource("ArrayMesh_t2pk0")
 skin = SubResource("Skin_kjj88")
 skeleton = NodePath("..")

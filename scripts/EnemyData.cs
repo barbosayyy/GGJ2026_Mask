@@ -13,6 +13,7 @@ public partial class EnemyData : Resource
 	[Export] public int RewardAmount = 1;
 	[Export] public Color EnemyColor = Colors.Red;
 	[Export] public Vector3 Scale = Vector3.One;
+	[Export] public int id = -1;
 
 	[Export] public float KnockbackResistance = 0f; // 0 = full knockback, 1 = immune
 	[Export] public bool CanFly = false;

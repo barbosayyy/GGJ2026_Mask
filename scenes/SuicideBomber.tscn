@@ -9,6 +9,7 @@ script = ExtResource("2_3ri2t")
 EnemyName = "Bomber"
 AttackRange = 2.0
 EnemyColor = Color(0.03125, 1, 0, 1)
+id = 2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yhmlg"]
 
@@ -30,7 +31,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5644687, 0)
 [node name="Area3D" type="Area3D" parent="." unique_id=771409499]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1050583107]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2748153, 0)
+transform = Transform3D(1.99, 0, 0, 0, 1.37, 0, 0, 0, 1.99, 0, 1.2748153, 0)
 shape = SubResource("CapsuleShape3D_t68yt")
 
 [node name="BodyCollision" type="CollisionShape3D" parent="." unique_id=231845553]

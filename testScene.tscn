@@ -20,10 +20,16 @@ grassMat = ExtResource("3_60y0o")
 [node name="EnemySpawner" type="Node3D" parent="." unique_id=316060434]
 script = ExtResource("3_c3fdh")
 EnemyScenes = [ExtResource("4_60y0o"), ExtResource("5_cwcnw"), ExtResource("6_wcre3")]
+SpawnInterval = 5.0
 SpawnDistance = 35.0
+MaxEnemiesAlive = 25
 
-[node name="Player" parent="." unique_id=909576383 groups=["player"] instance=ExtResource("2_0xm2m")]
+[node name="Player" parent="." unique_id=909576383 instance=ExtResource("2_0xm2m")]
 velocity = 5.0
+SwordSlashScene = null
+KunaiScene = null
+KunaiCount = 8
+AbilityCooldown = 0.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1995024798]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

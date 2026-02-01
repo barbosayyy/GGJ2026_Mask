@@ -74,6 +74,14 @@ public partial class Playfield : Node3D
 				AddChild(staticBody);
 				bodyList.Add(staticBody);
 				GD.Print("Added");
+
+				AudioStreamPlayer3D audio = new AudioStreamPlayer3D();
+				audio.Stream = GD.Load<AudioStream>("res://Audio/ambience.wav");
+				AddChild(audio);
+				// bcuz its too loud
+				audio.VolumeDb = -11;
+				audio.Play();
+				audio.Finished += () => audio.QueueFree();
 			}
 		}
 	}

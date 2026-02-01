@@ -10,12 +10,11 @@ public partial class Enemy : CharacterBody3D
 	protected Node3D target;
 	protected float attackTimer = 0.5f;
 	protected MeshInstance3D visual;
-	protected AnimationPlayer player;
+	protected AnimationPlayer animPlayer;
 	
 	[Signal]
 	public delegate void HealthChangedEventHandler(float current, float max);
 	
-
 	public override void _Ready()
 	{
 		if (Data == null)
@@ -37,7 +36,7 @@ public partial class Enemy : CharacterBody3D
 	{
 		Area3D area = (Area3D)FindChild("Area3D");
 		area.InputEvent += OnInput;
-		player = (AnimationPlayer)FindChild("AnimationPlayer");
+		animPlayer = (AnimationPlayer)FindChild("AnimationPlayer");
 	}
 
 	protected virtual void SetupVisual()
@@ -64,26 +63,27 @@ public partial class Enemy : CharacterBody3D
 		{
 			Camera3D camera3D = GetViewport().GetCamera3D();
 			PlayerController player = (PlayerController)camera3D.FindParent("Player");
-			player.Possess(Position);
+			player.Possess(Position, Data.id);
 			Die();
+		}
+	}
+	public override void _Process(double delta)
+	{
+		FindTarget();
+		if (target != null)
+		{
+			MoveTowardsTarget((float)delta);
+			HandleAttack((float)delta);
 		}
 	}
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Data == null) return;
 
-		FindTarget();
-
-		if (target != null)
-		{
-			MoveTowardsTarget((float)delta);
-			HandleAttack((float)delta);
-		}
-
 		OnPhysicsProcess(delta);
 		if(Position.DistanceTo(target.Position) > 2.2f)
 		{
-			LookAt(target.Position);
+			LookAt(new Vector3(target.Position.X, 1.589f, target.Position.Z));
 		}
 		MoveAndSlide();
 	}
@@ -118,7 +118,7 @@ public partial class Enemy : CharacterBody3D
 			if(Velocity == Vector3.Zero)
 			{
 				attackTimer = Data.AttackCooldown;
-				player.Play("WALK", -1, new RandomNumberGenerator().RandfRange(5,7));
+				animPlayer.Play("WALK", -1, new RandomNumberGenerator().RandfRange(5,7));
 			}
 			Velocity = direction * Data.MoveSpeed;
 		}
@@ -126,9 +126,9 @@ public partial class Enemy : CharacterBody3D
 		{
 			Velocity = Vector3.Zero;
 			attackTimer -= delta;
-			if(player.CurrentAnimation == "WALK")
+			if(animPlayer.CurrentAnimation == "WALK")
 			{
-				player.Stop();
+				animPlayer.Stop();
 			}
 		}
 	}
@@ -151,11 +151,11 @@ public partial class Enemy : CharacterBody3D
 		GD.Print($"{Data.EnemyName} attacks for {Data.Damage} damage!");
 		if(Data.EnemyName=="Ranged")
 		{
-			player.Play("CAST", -1, 2, false);
+			animPlayer.Play("CAST", -1, 2, false);
 		}
 		else
 		{
-			player.Play("SWORD", -1, 2, false);
+			animPlayer.Play("SWORD", -1, 2, false);
 		}
 	}
 
