@@ -4,11 +4,10 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_slash"]
 height = 1.0
-radius = 3.0
+radius = 6.0
 
 [node name="SwordSlash" type="Area3D" unique_id=1047623756]
 collision_layer = 4
-collision_mask = 1
 monitorable = false
 script = ExtResource("1_slash")
 

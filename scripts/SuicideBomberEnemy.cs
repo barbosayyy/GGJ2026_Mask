@@ -83,6 +83,12 @@ public partial class SuicideBomberEnemy : Enemy
 			}
 		}
 
+		// var audio = new AudioStreamPlayer3D();
+		// audio.Stream = GD.Load<AudioStream>("res://Audio/zombie_hit.wav");
+		// AddChild(audio);
+		// audio.Play();
+		// audio.Finished += () => audio.QueueFree();
+
 		// TODO: particle effects, screen shake (maybe?)
 		Die();
 	}

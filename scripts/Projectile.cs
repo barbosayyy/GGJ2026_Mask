@@ -83,7 +83,16 @@ public partial class Projectile : Area3D
 			otherProjectile.QueueFree();
 			QueueFree();
 		}
-		// Don't destroy on other area contacts
+
+		if (area.IsInGroup("player"))
+		{
+			var player = area.GetParent();
+			if (player != null && player.HasMethod("TakeDamage"))
+			{
+				player.Call("TakeDamage", damage);
+			}
+			QueueFree();
+		}
 	}
 
 	private void FireBallExplosion(Vector3 position)

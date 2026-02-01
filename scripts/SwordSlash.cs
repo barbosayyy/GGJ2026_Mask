@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public partial class SwordSlash : Area3D
 {
-	[Export] public float Damage = 30f;
-	[Export] public float SlashRadius = 3f;
+	[Export] public float Damage = 300f;
+	[Export] public float SlashRadius = 6f;
 	[Export] public float SlashAngle = 120f; // Degrees of the arc
 
 	private Node3D spawner;
@@ -77,6 +77,13 @@ public partial class SwordSlash : Area3D
 		material.EmissionEnergyMultiplier = 2f;
 		material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
 		mesh.MaterialOverride = material;
+
+		var audio = new AudioStreamPlayer3D();
+		audio.Stream = GD.Load<AudioStream>("res://Audio/unsheat_sword.wav");
+
+		GetTree().Root.AddChild(audio);
+		audio.Play();
+		audio.Finished += () => audio.QueueFree();
 
 		AddChild(mesh);
 

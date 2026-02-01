@@ -2,12 +2,12 @@ using Godot;
 
 public partial class Kunai : Area3D
 {
-	[Export] public float Speed = 15f;
-	[Export] public float Damage = 20f;
+	[Export] public float Speed = 30f;
+	[Export] public float Damage = 50f;
 
 	private Vector3 direction;
 	private Node3D spawner;
-	private float lifetime = 5f;
+	private float lifetime = .25f;
 
 	public override void _Ready()
 	{

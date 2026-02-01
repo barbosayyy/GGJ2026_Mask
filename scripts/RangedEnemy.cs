@@ -103,6 +103,12 @@ public partial class RangedEnemy : Enemy
 			if (projectile.HasMethod("Initialize"))
 			{
 				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage, this);
+				var audio = new AudioStreamPlayer3D();
+				audio.Stream = GD.Load<AudioStream>("res://Audio/fireball.wav");
+
+				GetTree().Root.AddChild(audio);
+				audio.Play();
+				audio.Finished += () => audio.QueueFree();
 			}
 		}
 	}

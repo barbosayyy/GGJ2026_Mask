@@ -172,6 +172,31 @@ public partial class Enemy : CharacterBody3D
 
 	protected virtual void OnDamageTaken(float damage)
 	{
+		if(Data.EnemyName == "Ranged" || Data.EnemyName == "Basic")
+		{
+			var audio = new AudioStreamPlayer3D();
+			var rng = new RandomNumberGenerator();
+			rng.Randomize();
+			if(rng.RandiRange(1, 100) == 1)
+			{
+				audio.Stream = GD.Load<AudioStream>("res://Audio/skyrim_skeleton.wav");
+			}
+			else
+			{
+				audio.Stream = GD.Load<AudioStream>("res://Audio/skeleton_hit.wav");
+			}
+			GetTree().Root.AddChild(audio);
+			audio.Play();
+			audio.Finished += () => audio.QueueFree();
+		} else
+		{
+			var audio = new AudioStreamPlayer3D();
+			audio.Stream = GD.Load<AudioStream>("res://Audio/zombie_hit.wav");
+
+			GetTree().Root.AddChild(audio);
+			audio.Play();
+			audio.Finished += () => audio.QueueFree();
+		}
 	}
 
 	protected virtual void Die()

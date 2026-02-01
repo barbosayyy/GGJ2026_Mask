@@ -6,6 +6,7 @@ using System.Linq;
 public partial class PlayerController : Node3D
 {
 	Camera3D cam;
+	Healthbar healthbar;
 
 	Vector3 currentPos;
 	public Vector3 moveToPos;
@@ -43,6 +44,14 @@ public partial class PlayerController : Node3D
 		equippedAbilities.Add(abilities.ElementAt(0));
 		equippedAbilities.Add(abilities.ElementAt(1));
 		equippedAbilities.Add(abilities.ElementAt(2));
+
+		// Get the healthbar from the group
+		var healthbars = GetTree().GetNodesInGroup("player_healthbar");
+		if (healthbars.Count > 0)
+		{
+			healthbar = healthbars[0] as Healthbar;
+			healthbar.InitHealth(maxHealth);
+		}
 
 		SetPlayerHealth(maxHealth);
 	}
@@ -181,6 +190,13 @@ public partial class PlayerController : Node3D
 			kunai.GlobalPosition = GlobalPosition + new Vector3(0, 1f, 0);
 			kunai.Initialize(direction, this);
 		}
+
+		var audio = new AudioStreamPlayer3D();
+		audio.Stream = GD.Load<AudioStream>("res://Audio/kunai_throw.wav");
+
+		GetTree().Root.AddChild(audio);
+		audio.Play();
+		audio.Finished += () => audio.QueueFree();
 	}
 
 	// Aiming Arrow Interface
@@ -223,7 +239,7 @@ public partial class PlayerController : Node3D
 	private void SetPlayerHealth(float newHealth)
 	{
 		currentHealth = newHealth;
-		GD.Print("New health is now ${health}");
+		healthbar?.SetHealth(newHealth);
 	}
 
 	public virtual void TakeDamage(float damage)
@@ -250,7 +266,7 @@ public partial class PlayerController : Node3D
 
 	protected virtual void OnDamageTaken(float damage)
 	{
-		// damage or sound animation
+		healthbar?.DecreaseHealth(damage);
 	}
 
 	public bool IsAimingArrowVisible()
