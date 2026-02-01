@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://8eltcpbs587w" path="res://scenes/SuicideBomber.tscn" id="6_272bh"]
+[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="7_272bh"]
 
 [node name="main" type="Node3D" unique_id=680527119]
 script = ExtResource("1_7mycd")
@@ -20,6 +21,7 @@ EnemyScenes = [ExtResource("4_enemy"), ExtResource("5_7mycd"), ExtResource("6_27
 
 [node name="Player" parent="." unique_id=909576383 groups=["player"] instance=ExtResource("6_7mycd")]
 velocity = 4.0
+abilities = Array[ExtResource("7_272bh")]([])
 
 [node name="Camera" parent="Player" index="1" unique_id=1175584071]
 current = true

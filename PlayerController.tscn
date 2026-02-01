@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://cy2m5d3mpa47e"]
 
 [ext_resource type="Script" uid="uid://7ncr0bbmbx78" path="res://PlayerController.cs" id="1_xhfnw"]
-[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="2_3mwrl"]
-[ext_resource type="Resource" uid="uid://c0yjy6xy52m33" path="res://resources/Slash.tres" id="3_g0g1r"]
-[ext_resource type="Resource" uid="uid://bgbb6f2i8t54n" path="res://resources/Crossbow.tres" id="4_3pjhv"]
-[ext_resource type="Resource" uid="uid://bgcddmrg8yfro" path="res://resources/Fireball.tres" id="5_876be"]
+[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="2_876be"]
+[ext_resource type="Resource" path="res://Resources/Slash.tres" id="3_xmas2"]
+[ext_resource type="Texture2D" uid="uid://cmlsru03hx61e" path="res://assets/arrowvfx.png" id="3_y00gc"]
+[ext_resource type="Resource" path="res://Resources/Crossbow.tres" id="4_ehpa4"]
+[ext_resource type="Resource" path="res://Resources/Fireball.tres" id="5_fq6e3"]
 [ext_resource type="Shader" uid="uid://bkmxw7nd2wkti" path="res://shaders/ps1.gdshader" id="6_3pjhv"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kpjcp"]
@@ -19,9 +20,10 @@ material = SubResource("ShaderMaterial_vl31c")
 flip_faces = true
 size = Vector2(2, 2)
 
-[node name="Player" type="Node3D" unique_id=909576383]
+[node name="Player" type="Node3D" unique_id=909576383 node_paths=PackedStringArray("aimingArrow")]
 script = ExtResource("1_xhfnw")
-abilities = Array[ExtResource("2_3mwrl")]([ExtResource("3_g0g1r"), ExtResource("4_3pjhv"), ExtResource("5_876be")])
+abilities = Array[ExtResource("2_876be")]([ExtResource("3_xmas2"), ExtResource("4_ehpa4"), ExtResource("5_fq6e3")])
+aimingArrow = NodePath("AimingArrow")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1573086431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -32,5 +34,12 @@ transform = Transform3D(1, 0, 0, 0, 0.6172693, 0.7867519, 0, -0.7867519, 0.61726
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera" unique_id=26496308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22879958, 0.5026282, -3.4714057)
+visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_876be")
+
+[node name="AimingArrow" type="Node3D" parent="." unique_id=2104262201]
+
+[node name="Sprite3D" type="Sprite3D" parent="AimingArrow" unique_id=382291203]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.5, 1.96)
+texture = ExtResource("3_y00gc")

@@ -41,7 +41,6 @@ public partial class Projectile : Area3D
 
 	private void OnBodyEntered(Node3D body)
 	{
-		// Ignore the enemy that spawned this projectile
 		if (body == spawner) return;
 
 		if (body.IsInGroup("player"))
@@ -60,20 +59,15 @@ public partial class Projectile : Area3D
 
 	private void OnAreaEntered(Area3D area)
 	{
-		// Check if we hit another projectile
 		if (area is Projectile otherProjectile && !hasExploded && !otherProjectile.hasExploded)
 		{
-			// Mark both as exploded to prevent double explosions
 			hasExploded = true;
 			otherProjectile.hasExploded = true;
 
-			// Calculate midpoint between the two projectiles
 			Vector3 explosionPoint = (GlobalPosition + otherProjectile.GlobalPosition) / 2f;
 
-			// Create the big explosion
-			CreateBigExplosion(explosionPoint);
+			FireBallExplosion(explosionPoint);
 
-			// Destroy both projectiles
 			otherProjectile.QueueFree();
 			QueueFree();
 			return;
@@ -82,11 +76,8 @@ public partial class Projectile : Area3D
 		QueueFree();
 	}
 
-	private void CreateBigExplosion(Vector3 position)
+	private void FireBallExplosion(Vector3 position)
 	{
-		GD.Print("BOOM! Fireballs collided - Big explosion!");
-
-		// Deal area damage to all entities in range
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var shape = new SphereShape3D();
 		shape.Radius = ExplosionRadius;
@@ -106,10 +97,8 @@ public partial class Projectile : Area3D
 				var collider = colliderVariant.As<Node3D>();
 				if (collider != null && collider != spawner)
 				{
-					// Damage players and enemies
 					if (collider.HasMethod("TakeDamage"))
 					{
-						// Calculate damage falloff based on distance
 						float distance = position.DistanceTo(collider.GlobalPosition);
 						float damageMultiplier = 1f - (distance / ExplosionRadius);
 						float finalDamage = ExplosionDamage * Mathf.Max(0.3f, damageMultiplier);
@@ -121,13 +110,11 @@ public partial class Projectile : Area3D
 			}
 		}
 
-		// Create visual explosion effect
 		CreateExplosionVisual(position);
 	}
 
 	private void CreateExplosionVisual(Vector3 position)
 	{
-		// Create a simple expanding sphere as explosion visual
 		var explosionNode = new Node3D();
 		explosionNode.GlobalPosition = position;
 		GetTree().Root.AddChild(explosionNode);
@@ -139,29 +126,25 @@ public partial class Projectile : Area3D
 		mesh.Mesh = sphereMesh;
 
 		var material = new StandardMaterial3D();
-		material.AlbedoColor = new Color(1f, 0.5f, 0f); // Orange
+		material.AlbedoColor = new Color(1f, 0.5f, 0f);
 		material.EmissionEnabled = true;
-		material.Emission = new Color(1f, 0.3f, 0f); // Orange-red glow
+		material.Emission = new Color(1f, 0.3f, 0f);
 		material.EmissionEnergyMultiplier = 3f;
 		material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
 		mesh.MaterialOverride = material;
 
 		explosionNode.AddChild(mesh);
 
-		// Animate the explosion using a tween
 		var tween = explosionNode.CreateTween();
 		tween.SetParallel(true);
 
-		// Scale up
 		tween.TweenProperty(mesh, "scale", Vector3.One * ExplosionScale, 0.3f)
 			.SetEase(Tween.EaseType.Out)
 			.SetTrans(Tween.TransitionType.Expo);
 
-		// Fade out
 		tween.TweenProperty(material, "albedo_color:a", 0f, 0.4f)
 			.SetDelay(0.1f);
 
-		// Clean up after animation
 		tween.SetParallel(false);
 		tween.TweenCallback(Callable.From(() => explosionNode.QueueFree()))
 			.SetDelay(0.5f);

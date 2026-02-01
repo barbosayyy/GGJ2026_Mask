@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c8yk4m71xm1v0"]
+[gd_scene format=3 uid="uid://k0v163lowd41"]
 
 [ext_resource type="Script" uid="uid://d5w6uiy2scuv" path="res://canvas_shaders.gd" id="1_dl2yh"]
 [ext_resource type="Shader" uid="uid://ds6isv3kvghbo" path="res://shaders/rain.gdshader" id="2_rsi87"]
@@ -46,6 +46,7 @@ offset_bottom = 648.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.1415927
+mouse_filter = 2
 
 [node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=380271654]
 material = SubResource("ShaderMaterial_mspyk")
@@ -54,6 +55,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1472835924]
 
@@ -69,6 +71,7 @@ offset_right = 120.0
 offset_bottom = 117.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("5_n67eb")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer2/Healthbar" unique_id=656166997]
@@ -86,6 +89,7 @@ offset_bottom = 473.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.15, 0.15)
+mouse_filter = 2
 value = 60.0
 texture_under = ExtResource("6_dcukj")
 texture_progress = ExtResource("7_udg0e")

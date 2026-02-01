@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://p80x82x6rk8e"]
+[gd_scene format=3 uid="uid://bwrfmy7rescvf"]
 
 [ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cnn54rnvda725" path="res://scenes/ClickPulse.tscn" id="2_w2vy6"]
-[ext_resource type="PackedScene" uid="uid://c8yk4m71xm1v0" path="res://uiScene.tscn" id="3_5lntk"]
-[ext_resource type="Material" uid="uid://c2yxrtt4on6tv" path="res://assets/grass.tres" id="3_60y0o"]
+[ext_resource type="PackedScene" path="res://uiScene.tscn" id="3_5lntk"]
+[ext_resource type="Material" path="res://assets/grass.tres" id="3_60y0o"]
 [ext_resource type="Script" uid="uid://bthy3pdfoer82" path="res://scripts/EnemySpawner.cs" id="3_c3fdh"]
 [ext_resource type="PackedScene" uid="uid://bqn5xwqv3rwm7" path="res://scenes/BasicEnemy.tscn" id="4_60y0o"]
 [ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="5_cwcnw"]

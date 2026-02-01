@@ -143,11 +143,12 @@ public partial class Playfield : Node3D
 
     private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)
     {
+		player.UpdateAimingArrow(position);
+		
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
 		{
 			// Send moveto signal to player
 			// GD.Print($"Clicked plane at position: {position}");
-			player.moveToPos = position;
 			isPressed = true;
 			MeshInstance3D pulse = (MeshInstance3D)ClickPulseScene.Instantiate();
 			pulse.Position = new Vector3(position.X, 0, position.Z);
