@@ -2,24 +2,32 @@
 
 [ext_resource type="Script" uid="uid://chpfx2c37ajpe" path="res://scripts/SuicideBomberEnemy.cs" id="1_bx7mf"]
 [ext_resource type="Script" uid="uid://cf4ecaupxfjdf" path="res://scripts/EnemyData.cs" id="2_3ri2t"]
+[ext_resource type="PackedScene" uid="uid://bebyj187kxhom" path="res://assets/goblin.tscn" id="3_3ri2t"]
 
 [sub_resource type="Resource" id="Resource_3ri2t"]
 script = ExtResource("2_3ri2t")
-AttackRange = 0.5
+EnemyName = "Bomber"
+AttackRange = 2.0
 EnemyColor = Color(0.03125, 1, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yhmlg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
 
 [node name="SuicideBomber" type="CharacterBody3D" unique_id=521823954 groups=["enemy"]]
 script = ExtResource("1_bx7mf")
 Data = SubResource("Resource_3ri2t")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050583107]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("CapsuleShape3D_t68yt")
-
 [node name="Visual" type="MeshInstance3D" parent="." unique_id=2075345290]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_yhmlg")
+
+[node name="goblin" parent="." unique_id=834013357 instance=ExtResource("3_3ri2t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5644687, 0)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=771409499]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1050583107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_t68yt")

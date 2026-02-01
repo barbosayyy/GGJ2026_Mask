@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Enemy : CharacterBody3D
@@ -9,6 +10,7 @@ public partial class Enemy : CharacterBody3D
 	protected Node3D target;
 	protected float attackTimer = 0f;
 	protected MeshInstance3D visual;
+	protected AnimationPlayer player;
 	
 	[Signal]
 	public delegate void HealthChangedEventHandler(float current, float max);
@@ -26,11 +28,16 @@ public partial class Enemy : CharacterBody3D
 		SetupVisual();
 		var bars = GetTree().GetNodesInGroup("player_healthbar");
 		healthbar = bars[0] as Healthbar;
+
+
 		OnReady();
 	}
 
 	protected virtual void OnReady()
 	{
+		Area3D area = (Area3D)FindChild("Area3D");
+		area.InputEvent += OnInput;
+		player = (AnimationPlayer)FindChild("AnimationPlayer");
 	}
 
 	protected virtual void SetupVisual()
@@ -51,6 +58,16 @@ public partial class Enemy : CharacterBody3D
 		visual.SetSurfaceOverrideMaterial(0, material);
 	}
 
+	private void OnInput(Node camera, InputEvent @event, Vector3 position, Vector3 normal, long shapeIdx)
+    {
+		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
+		{
+			Camera3D camera3D = GetViewport().GetCamera3D();
+			PlayerController player = (PlayerController)camera3D.FindParent("Player");
+			player.Possess(Position);
+			Die();
+		}
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Data == null) return;
@@ -64,6 +81,10 @@ public partial class Enemy : CharacterBody3D
 		}
 
 		OnPhysicsProcess(delta);
+		if(Position.DistanceTo(target.Position) > 2.2f)
+		{
+			LookAt(target.Position);
+		}
 		MoveAndSlide();
 	}
 
@@ -92,8 +113,22 @@ public partial class Enemy : CharacterBody3D
 		{
 			direction.Y = 0;
 		}
-
-		Velocity = direction * Data.MoveSpeed;
+		if(Position.DistanceTo(target.Position) > Data.AttackRange)
+		{
+			if(Velocity == Vector3.Zero)
+			{
+				player.Play("WALK", -1, new RandomNumberGenerator().RandfRange(5,7));
+			}
+			Velocity = direction * Data.MoveSpeed;
+		}
+		else
+		{
+			Velocity = Vector3.Zero;
+			if(player.CurrentAnimation == "WALK")
+			{
+				player.Stop();
+			}
+		}
 	}
 
 	protected virtual void HandleAttack(float delta)
@@ -114,6 +149,14 @@ public partial class Enemy : CharacterBody3D
 	{
 		healthbar.DecreaseHealth((float)Data.Damage);
 		GD.Print($"{Data.EnemyName} attacks for {Data.Damage} damage!");
+		if(Data.EnemyName=="Ranged")
+		{
+			player.Play("CAST", -1, 2, false);
+		}
+		else
+		{
+			player.Play("SWORD", -1, 2, false);
+		}
 	}
 
 	public virtual void TakeDamage(float damage)

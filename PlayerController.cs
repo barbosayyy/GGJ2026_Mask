@@ -31,10 +31,14 @@ public partial class PlayerController : Node3D
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
-	{
-		currentPos += new Vector3(Position.DirectionTo(moveToPos).X * velocity * (float)delta, 0, Position.DirectionTo(moveToPos).Z * velocity * (float)delta);
-		Position = currentPos;
-	}
+    {
+        if(currentPos.DistanceSquaredTo(moveToPos) > 0.5)
+        {
+            currentPos += new Vector3(Position.DirectionTo(moveToPos).X * velocity * (float)delta, 0, Position.DirectionTo(moveToPos).Z * velocity * (float)delta);
+            Position = currentPos;
+        }
+
+    }
 
 	public override void _Input(InputEvent @event)
 	{
@@ -81,5 +85,12 @@ public partial class PlayerController : Node3D
 				GD.Print(equippedAbilities.ElementAt(abilityID).name);
 			break;
 		}
+	}
+
+	public void Possess(Vector3 pPosition)
+	{
+		Position = pPosition;
+		currentPos = Position;
+		moveToPos = Position;
 	}
 }

@@ -2,23 +2,32 @@
 
 [ext_resource type="Script" uid="uid://4ogtyt63x1gb" path="res://scripts/Enemy.cs" id="1_basic"]
 [ext_resource type="Script" uid="uid://cf4ecaupxfjdf" path="res://scripts/EnemyData.cs" id="2_3wrki"]
+[ext_resource type="PackedScene" uid="uid://cttjdvl64o5fq" path="res://assets/Skeleton.tscn" id="3_3ox23"]
 
 [sub_resource type="Resource" id="Resource_1xbk2"]
 script = ExtResource("2_3wrki")
+EnemyName = "Basic"
 MoveSpeed = 1.5
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
+AttackRange = 2.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yhmlg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t68yt"]
 
 [node name="BasicEnemy" type="CharacterBody3D" unique_id=521823954 groups=["enemy"]]
 script = ExtResource("1_basic")
 Data = SubResource("Resource_1xbk2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050583107]
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=2075345290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_yhmlg")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1426259302]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1050583107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CapsuleShape3D_t68yt")
 
-[node name="Visual" type="MeshInstance3D" parent="." unique_id=2075345290]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CapsuleMesh_yhmlg")
+[node name="skeleton" parent="." unique_id=536478968 instance=ExtResource("3_3ox23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5741241, 0)
