@@ -1,11 +1,27 @@
 [gd_scene format=3 uid="uid://cy2m5d3mpa47e"]
 
 [ext_resource type="Script" uid="uid://7ncr0bbmbx78" path="res://PlayerController.cs" id="1_xhfnw"]
+[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="2_3mwrl"]
+[ext_resource type="Resource" uid="uid://c0yjy6xy52m33" path="res://resources/Slash.tres" id="3_g0g1r"]
+[ext_resource type="Resource" uid="uid://bgbb6f2i8t54n" path="res://resources/Crossbow.tres" id="4_3pjhv"]
+[ext_resource type="Resource" uid="uid://bgcddmrg8yfro" path="res://resources/Fireball.tres" id="5_876be"]
+[ext_resource type="Shader" uid="uid://bkmxw7nd2wkti" path="res://shaders/ps1.gdshader" id="6_3pjhv"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kpjcp"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vl31c"]
+render_priority = 0
+shader = ExtResource("6_3pjhv")
+shader_parameter/dither_amount = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_876be"]
+material = SubResource("ShaderMaterial_vl31c")
+flip_faces = true
+size = Vector2(2, 2)
+
 [node name="Player" type="Node3D" unique_id=909576383]
 script = ExtResource("1_xhfnw")
+abilities = Array[ExtResource("2_3mwrl")]([ExtResource("3_g0g1r"), ExtResource("4_3pjhv"), ExtResource("5_876be")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1573086431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -13,3 +29,8 @@ mesh = SubResource("CapsuleMesh_kpjcp")
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1175584071]
 transform = Transform3D(1, 0, 0, 0, 0.6172693, 0.7867519, 0, -0.7867519, 0.6172693, 0, 5.537226, 3.5524309)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera" unique_id=26496308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22879958, 0.5026282, -3.4714057)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_876be")

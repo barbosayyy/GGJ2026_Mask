@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://c0yjy6xy52m33"]
+
+[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="1_pinvj"]
+
+[resource]
+script = ExtResource("1_pinvj")
+id = 0
+metadata/_custom_type_script = "uid://da28ovu5whote"

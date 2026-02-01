@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c2yxrtt4on6tv"]
+
+[ext_resource type="Texture2D" uid="uid://d0erbbbnmqncc" path="res://assets/grasstiles.png" id="1_5nud8"]
+
+[resource]
+albedo_color = Color(0.23137255, 0.32941177, 0.101960786, 1)
+albedo_texture = ExtResource("1_5nud8")
+uv1_scale = Vector3(4, 4, 4)
+uv2_scale = Vector3(4, 4, 4)

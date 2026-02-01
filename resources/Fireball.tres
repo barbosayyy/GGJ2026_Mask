@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://bgcddmrg8yfro"]
+
+[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="1_h0urc"]
+
+[resource]
+script = ExtResource("1_h0urc")
+name = "Fireball"
+id = 2
+type = 1
+range = 6.0
+metadata/_custom_type_script = "uid://da28ovu5whote"

@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://pithvsax6nnl"]
 
 [ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_p1ktr"]
-[ext_resource type="PackedScene" uid="uid://cnn54rnvda725" path="res://scenes/ClickPulse.tscn" id="2_2q1im"]
-[ext_resource type="Script" uid="uid://bthy3pdfoer82" path="res://scripts/EnemySpawner.cs" id="2_n2tsw"]
+[ext_resource type="Script" uid="uid://bkdkbv2kecjio" path="res://scripts/EnemySpawner.cs" id="2_n2tsw"]
 [ext_resource type="PackedScene" uid="uid://bqn5xwqv3rwm7" path="res://scenes/BasicEnemy.tscn" id="3_crrlo"]
 [ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="4_tpjdf"]
 [ext_resource type="PackedScene" uid="uid://8eltcpbs587w" path="res://scenes/SuicideBomber.tscn" id="5_2q1im"]
@@ -10,24 +9,10 @@
 [ext_resource type="Shader" uid="uid://ds6isv3kvghbo" path="res://shaders/rain.gdshader" id="7_crrlo"]
 [ext_resource type="Script" uid="uid://d5w6uiy2scuv" path="res://canvas_shaders.gd" id="7_tpjdf"]
 [ext_resource type="Shader" uid="uid://bmprpur4d65ds" path="res://shaders/dark.gdshader" id="8_tpjdf"]
-[ext_resource type="Shader" uid="uid://bkmxw7nd2wkti" path="res://shaders/ps1.gdshader" id="8_vl31c"]
 [ext_resource type="PackedScene" uid="uid://qvqpvtfjs1er" path="res://scenes/healthbar.tscn" id="11_siqnr"]
 [ext_resource type="Script" uid="uid://d3t14n8qjqoky" path="res://scenes/Healthbar.cs" id="12_p7m4m"]
 [ext_resource type="Texture2D" uid="uid://b1wpoc3jxsub7" path="res://assets/mask.png" id="13_xmf3f"]
 [ext_resource type="Texture2D" uid="uid://3rlxwds8yy0h" path="res://assets/mask_base.png" id="14_vl31c"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vl31c"]
-render_priority = 0
-shader = ExtResource("8_vl31c")
-shader_parameter/dither_amount = 0.5
-
-[sub_resource type="QuadMesh" id="QuadMesh_xwjhb"]
-material = SubResource("ShaderMaterial_vl31c")
-flip_faces = true
-size = Vector2(2, 2)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_xmf3f"]
-height = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2q1im"]
 shader = ExtResource("7_crrlo")
@@ -52,7 +37,6 @@ shader_parameter/darkness = 0.70400003344
 
 [node name="main" type="Node3D" unique_id=680527119]
 script = ExtResource("1_p1ktr")
-ClickPulseScene = ExtResource("2_2q1im")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1553826547]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
@@ -66,15 +50,6 @@ EnemyScenes = [ExtResource("3_crrlo"), ExtResource("4_tpjdf"), ExtResource("5_2q
 
 [node name="Camera" parent="Player" index="1" unique_id=1175584071]
 current = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Camera" index="0" unique_id=1975637967]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22879958, 0.5026282, -3.4714057)
-extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_xwjhb")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player" unique_id=1086854595]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866662, 1.4424331, 0)
-mesh = SubResource("CylinderMesh_xmf3f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=643670982]
 script = ExtResource("7_tpjdf")

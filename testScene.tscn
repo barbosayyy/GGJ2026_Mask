@@ -1,23 +1,41 @@
-[gd_scene format=3 uid="uid://bwrfmy7rescvf"]
+[gd_scene format=3 uid="uid://p80x82x6rk8e"]
 
 [ext_resource type="Script" uid="uid://beq0om67isnch" path="res://Playfield.cs" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cy2m5d3mpa47e" path="res://PlayerController.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cnn54rnvda725" path="res://scenes/ClickPulse.tscn" id="2_w2vy6"]
+[ext_resource type="PackedScene" uid="uid://c8yk4m71xm1v0" path="res://uiScene.tscn" id="3_5lntk"]
+[ext_resource type="Material" uid="uid://c2yxrtt4on6tv" path="res://assets/grass.tres" id="3_60y0o"]
+[ext_resource type="Script" uid="uid://bthy3pdfoer82" path="res://scripts/EnemySpawner.cs" id="3_c3fdh"]
+[ext_resource type="PackedScene" uid="uid://bqn5xwqv3rwm7" path="res://scenes/BasicEnemy.tscn" id="4_60y0o"]
+[ext_resource type="PackedScene" uid="uid://c8w2m6worj8qo" path="res://scenes/RangedEnemy.tscn" id="5_cwcnw"]
+[ext_resource type="PackedScene" uid="uid://8eltcpbs587w" path="res://scenes/SuicideBomber.tscn" id="6_wcre3"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0xm2m"]
 
 [node name="Root" type="Node3D" unique_id=928280500]
 script = ExtResource("1_0xm2m")
-planeScale = Vector3(8, 8, 8)
-planeInitOffset = Vector3(-16, 0, -16)
-spacing = Vector3(16, 0, 16)
+ClickPulseScene = ExtResource("2_w2vy6")
+grassMat = ExtResource("3_60y0o")
 
-[node name="Player" parent="." unique_id=909576383 instance=ExtResource("2_0xm2m")]
-velocity = 3.0
+[node name="EnemySpawner" type="Node3D" parent="." unique_id=316060434]
+script = ExtResource("3_c3fdh")
+EnemyScenes = [ExtResource("4_60y0o"), ExtResource("5_cwcnw"), ExtResource("6_wcre3")]
+
+[node name="Player" parent="." unique_id=909576383 groups=["player"] instance=ExtResource("2_0xm2m")]
+velocity = 15.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1995024798]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+visible = false
+material_override = ExtResource("3_60y0o")
 mesh = SubResource("PlaneMesh_0xm2m")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1432246562]
 transform = Transform3D(0.55658567, 0.6238749, -0.54862785, 0, 0.6603687, 0.7509416, 0.8307902, -0.41796333, 0.36755174, 0, 0, 0)
+shadow_enabled = true
+
+[node name="GameUI" parent="." unique_id=343424156 instance=ExtResource("3_5lntk")]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=683147970]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
 shadow_enabled = true

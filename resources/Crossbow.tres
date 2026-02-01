@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://bgbb6f2i8t54n"]
+
+[ext_resource type="Script" uid="uid://da28ovu5whote" path="res://scripts/Ability.cs" id="1_4tndy"]
+
+[resource]
+script = ExtResource("1_4tndy")
+name = "Crossbow"
+id = 1
+type = 1
+range = 5.0
+metadata/_custom_type_script = "uid://da28ovu5whote"
