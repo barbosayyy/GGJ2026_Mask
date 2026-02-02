@@ -61,10 +61,13 @@ public partial class Enemy : CharacterBody3D
     {
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
 		{
+			
 			Camera3D camera3D = GetViewport().GetCamera3D();
 			PlayerController player = (PlayerController)camera3D.FindParent("Player");
-			player.Possess(Position, Data.id);
-			Die();
+			if(player.Possess(new Vector3(position.X, 0, position.Z), Data.id) == true)
+			{
+				Die();
+			} 
 		}
 	}
 	public override void _Process(double delta)
@@ -83,7 +86,8 @@ public partial class Enemy : CharacterBody3D
 		OnPhysicsProcess(delta);
 		if(Position.DistanceTo(target.Position) > 2.2f)
 		{
-			LookAt(new Vector3(target.Position.X, 1.589f, target.Position.Z));
+			LookAt(new Vector3(target.Position.X, 0, target.Position.Z));
+			Rotation = new Vector3(0, Rotation.Y, Rotation.Z);
 		}
 		MoveAndSlide();
 	}
@@ -179,10 +183,12 @@ public partial class Enemy : CharacterBody3D
 			rng.Randomize();
 			if(rng.RandiRange(1, 100) == 1)
 			{
+				audio.VolumeDb = -1;
 				audio.Stream = GD.Load<AudioStream>("res://Audio/skyrim_skeleton.wav");
 			}
 			else
 			{
+				audio.VolumeDb = -3;
 				audio.Stream = GD.Load<AudioStream>("res://Audio/skeleton_hit.wav");
 			}
 			GetTree().Root.AddChild(audio);
@@ -194,6 +200,7 @@ public partial class Enemy : CharacterBody3D
 			audio.Stream = GD.Load<AudioStream>("res://Audio/zombie_hit.wav");
 
 			GetTree().Root.AddChild(audio);
+			audio.VolumeDb = -11;
 			audio.Play();
 			audio.Finished += () => audio.QueueFree();
 		}

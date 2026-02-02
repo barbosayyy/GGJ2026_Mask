@@ -103,26 +103,18 @@ texture_progress = ExtResource("7_udg0e")
 [node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer2" unique_id=559176632]
 
 [node name="FixedLabel" type="Label" parent="CanvasLayer2" unique_id=302392678]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1899.0
-offset_top = 1.0
-offset_right = -1630.0
-offset_bottom = 429.0
-grow_horizontal = 0
+offset_right = 269.0
+offset_bottom = 428.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 text = "Slain:"
 label_settings = SubResource("LabelSettings_dl2yh")
+horizontal_alignment = 2
 
 [node name="Score" type="Label" parent="CanvasLayer2" unique_id=2066924160]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1653.0
-offset_top = 1.0
-offset_right = -1384.0
-offset_bottom = 429.0
-grow_horizontal = 0
+offset_left = 285.0
+offset_right = 554.0
+offset_bottom = 428.0
 text = "0
 "
 label_settings = SubResource("LabelSettings_dl2yh")

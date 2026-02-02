@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0erbbbnmqncc"
 path.s3tc="res://.godot/imported/grasstiles.png-5929ea1073abfb1895ab08b6b06f20d2.s3tc.ctex"
+path.etc2="res://.godot/imported/grasstiles.png-5929ea1073abfb1895ab08b6b06f20d2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/grasstiles.png"
-dest_files=["res://.godot/imported/grasstiles.png-5929ea1073abfb1895ab08b6b06f20d2.s3tc.ctex"]
+dest_files=["res://.godot/imported/grasstiles.png-5929ea1073abfb1895ab08b6b06f20d2.s3tc.ctex", "res://.godot/imported/grasstiles.png-5929ea1073abfb1895ab08b6b06f20d2.etc2.ctex"]
 
 [params]
 

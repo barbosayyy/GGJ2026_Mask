@@ -104,6 +104,7 @@ public partial class RangedEnemy : Enemy
 			{
 				projectile.Call("Initialize", direction, ProjectileSpeed, Data.Damage, this);
 				var audio = new AudioStreamPlayer3D();
+				audio.VolumeDb = -6;
 				audio.Stream = GD.Load<AudioStream>("res://Audio/fireball.wav");
 
 				GetTree().Root.AddChild(audio);

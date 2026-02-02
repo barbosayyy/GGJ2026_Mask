@@ -71,6 +71,7 @@ public partial class PlayerController : Node3D
 		animPlayer = (AnimationPlayer)skelly.FindChild("AnimationPlayer");
 		goblin = (Node3D)FindChild("GoblinMode", true);
 		goblin.Hide();
+		animPlayer.Play("IDLE");
 	}
 
     public override void _EnterTree()
@@ -82,23 +83,23 @@ public partial class PlayerController : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(currentPos.DistanceSquaredTo(moveToPos) > 0.5)
+		if(currentPos.DistanceSquaredTo(moveToPos) > 1.0)
 		{
-			if(animPlayer.IsPlaying() == false)
+			if(animPlayer.CurrentAnimation == "IDLE")
 			{
 				animPlayer.Play("WALK",-1, 3, false);
 			}
 			currentPos += new Vector3(Position.DirectionTo(moveToPos).X * velocity * (float)delta, 0, Position.DirectionTo(moveToPos).Z * velocity * (float)delta);
 			Position = currentPos;
-			skelly.LookAt(new Vector3(moveToPos.X, 1.589f, moveToPos.Z));
-			goblin.LookAt(new Vector3(moveToPos.X, 1.589f, moveToPos.Z));
+			
+			skelly.LookAt(new Vector3(moveToPos.X, 0, moveToPos.Z));
+			goblin.LookAt(new Vector3(moveToPos.X, 0, moveToPos.Z));
+			skelly.Rotation = new Vector3(0, skelly.Rotation.Y, skelly.Rotation.Z);
+			goblin.Rotation = new Vector3(0, skelly.Rotation.Y, skelly.Rotation.Z);
 		}
 		else
 		{
-			if(animPlayer.IsPlaying() == true)
-			{
-				animPlayer.Stop();
-			}
+			animPlayer.Play("IDLE");
 		}
 
 		// Update ability cooldown
@@ -133,6 +134,16 @@ public partial class PlayerController : Node3D
 		{
 			UseAbility(equippedAbilities.ElementAt(2).id);
 		}
+
+		if (isAimingArrowVisible)
+		{
+			InputEventMouseButton mouseEvent = new InputEventMouseButton();
+			if(@event == mouseEvent)
+				if(mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
+				{
+					
+				}
+		}
 	}
 	
 	// Ability behaviors
@@ -146,6 +157,7 @@ public partial class PlayerController : Node3D
 				GD.Print("Used Sword Slash!");
 				SpawnSwordSlash();
 				animPlayer.Play("SWORD", -1, 1, false);
+				animPlayer.Queue("IDLE");
 				abilityCooldownTimer = AbilityCooldown;
 				break;
 			case(1): // W - Circular Kunai Throw
@@ -154,9 +166,12 @@ public partial class PlayerController : Node3D
 				abilityCooldownTimer = AbilityCooldown;
 				break;
 			case(2):
-				GD.Print("Used ability 3");
-				ShowAimingArrow();
-				GD.Print(equippedAbilities.ElementAt(abilityID).name);
+				if(possessedID == 1)
+				{
+					GD.Print("Used ability 3");
+					ShowAimingArrow();
+					GD.Print(equippedAbilities.ElementAt(abilityID).name);
+				}
 				break;
 		}
 	}
@@ -224,7 +239,7 @@ public partial class PlayerController : Node3D
 
 		var audio = new AudioStreamPlayer3D();
 		audio.Stream = GD.Load<AudioStream>("res://Audio/kunai_throw.wav");
-
+		
 		GetTree().Root.AddChild(audio);
 		audio.Play();
 		audio.Finished += () => audio.QueueFree();
@@ -305,28 +320,33 @@ public partial class PlayerController : Node3D
 		return isAimingArrowVisible;
 	}
 
-	public void Possess(Vector3 pPosition, int enemyID)
+	public bool Possess(Vector3 pPosition, int enemyID)
 	{
+		if(isAimingArrowVisible == true)
+		{
+			return false;
+		}
+
 		Position = pPosition;
 		currentPos = Position;
-		moveToPos = Position;
+		moveToPos = new Vector3(Position.X, 0, Position.Z);
 		animPlayer.Stop();
+
+		possessedID = enemyID;
 
 		if(enemyID == 0 || enemyID == 1)
 		{
 			skelly.Show();
 			goblin.Hide();
 			animPlayer = (AnimationPlayer)skelly.FindChild("AnimationPlayer");
-			Position = new Vector3(pPosition.X, 0f, pPosition.Z);
 		}
 		else if(enemyID == 2)
 		{
 			goblin.Show();
 			skelly.Hide();
 			animPlayer = (AnimationPlayer)goblin.FindChild("AnimationPlayer");
-			Position = new Vector3(pPosition.X, 0f, pPosition.Z);
 		}
-		LookAt(new Vector3(1, 1.4f, 0));
+		return true;
 	}
 
 	public void AddScore(int amount)

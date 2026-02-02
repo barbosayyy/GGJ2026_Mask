@@ -165,14 +165,14 @@ public partial class Playfield : Node3D
 		else if (@event is InputEventMouseButton mEvent && mEvent.ButtonIndex == MouseButton.Right && mEvent.IsPressed() == false)
 		{
 			// GD.Print($"Released at position: {position}");
-			player.moveToPos = position;
+			player.moveToPos = new Vector3(position.X, 1.589f, position.Z);
 			isPressed = false;
 		}
 		else if (@event is InputEventMouseMotion motionEvent && isPressed)
 		{
 			// When dragging, update position
 			// GD.Print($"Motion at: {position}");
-			player.moveToPos = position;
+			player.moveToPos = new Vector3(position.X, 1.589f, position.Z);
 		}
     }
 }
